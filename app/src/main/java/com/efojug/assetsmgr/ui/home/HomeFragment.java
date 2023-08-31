@@ -32,7 +32,9 @@ public class HomeFragment extends Fragment {
     private Spinner expenseTypeSpinner;
     private List<String> mExpenseType;
     private ArrayAdapter<String> mAdapter;
-
+    private int mSelectedPosition = 0;
+//    private String mSelectedData = mExpenseType.get(0);
+    private String mSelectedData = mExpenseType != null && !mExpenseType.isEmpty() ? mExpenseType.get(0) : "";
     private Assets.Type currentSelectedType = Assets.Type.SchoolSupplies;
 
     private void showToast(String text) {
@@ -61,8 +63,9 @@ public class HomeFragment extends Fragment {
         expenseTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String item = mAdapter.getItem(position);
-                currentSelectedType = Assets.Type.fromChinese(item);
+                mSelectedPosition = position;
+                mSelectedData = mAdapter.getItem(position);
+//                currentSelectedType = Assets.Type.fromChinese(mSelectedData);
             }
 
             @Override
@@ -75,6 +78,8 @@ public class HomeFragment extends Fragment {
         root.findViewById(R.id.add_expense_button).setOnClickListener(v -> {
             // Get the title and content from the EditText views
             String expenseAmount = expenseAmountEditText.getText().toString();
+            //在onClick时获取 :)
+            String expenseType = mSelectedData;
 
             if (currentSelectedType == null) {
                 showToast("请选择要添加的类型");
