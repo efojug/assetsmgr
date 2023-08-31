@@ -1,7 +1,5 @@
 package com.efojug.assetsmgr;
 
-
-//Default Code
 import android.content.Context;
 import android.os.Bundle;
 
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     /**
      * 读取给定 JSON 文件并将其作为字符串返回
      *
@@ -98,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
     public void modifyExpense(Context context, String filename, String expenseName, double newAmount) throws IOException {
         // 读取 JSON 字符串并将其转换为 List of Expense 对象
         String jsonString = readJSONStringFromFile(context, filename);
-        Type listType = new TypeToken<List<Expense>>(){}.getType();
+        Type listType = new TypeToken<List<Expense>>() {
+        }.getType();
         List<Expense> expensesList = new Gson().fromJson(jsonString, listType);
 
         // 修改 Expense 对象中名为 "Shopping" 的费用的金额

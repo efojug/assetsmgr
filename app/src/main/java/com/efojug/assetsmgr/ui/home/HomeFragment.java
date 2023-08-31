@@ -1,119 +1,101 @@
 package com.efojug.assetsmgr.ui.home;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.efojug.assetsmgr.Expense;
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentHomeBinding;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.io.PrintWriter;
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private Button addExpenseButton;
     private EditText expenseNameEditText;
     private EditText expenseAmountEditText;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private void showToast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    private String getDate(String dateType) {
+        Calendar cal = Calendar.getInstance();
+        switch (dateType) {
+            case "year":
+                return String.valueOf(cal.get(Calendar.YEAR));
+            case "month":
+                return String.valueOf(cal.get(Calendar.MONTH) + 1);
+            case "day":
+                return String.valueOf(cal.get(Calendar.DATE));
+            case "hour":
+                return String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
+            case "minute":
+                return String.valueOf(cal.get(Calendar.MINUTE));
+            default:
+                throw new IllegalArgumentException("Invalid Input Type");
+        }
+    }
+
+    private File getExpenseDataFile() {
+        String time = getDate("year") + " - " + getDate("month");
+        File expenseDataFile = new File(Environment.getExternalStorageDirectory(), time);
+        if (!expenseDataFile.exists()) {
+            try {
+                expenseDataFile.createNewFile();
+            } catch (IOException e) {
+                showToast("创建文件失败， " + e);
+            }
+        }
+        return expenseDataFile;
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         expenseNameEditText = root.findViewById(R.id.expense_name_edittext);
         expenseAmountEditText = root.findViewById(R.id.expense_amount_edittext);
-        addExpenseButton = root.findViewById(R.id.add_expense_button);
-
-        addExpenseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String expenseName = expenseNameEditText.getText().toString();
-                String expenseAmount = expenseAmountEditText.getText().toString();
-
-                // Handle adding expense to JSON file here
-                addExpenseToJSON(new Expense(expenseName, Double.parseDouble(expenseAmount)));
-            }
-        });
-
+        getExpenseDataFile();
         return root;
     }
 
-    private void addExpenseToJSON(Expense expense) {
-        String jsonString;
+    public void saveExpenseData(String name, String amount) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter(getDate("year") + " - " + getDate("month"), true));
+        // 2-16:43 [消费] <20.2>
         try {
-            // Read existing JSON data from file
-            FileInputStream inputStream = getActivity().openFileInput("expenses.json");
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-
-            // Convert bytes array into JSON string
-            jsonString = new String(buffer, StandardCharsets.UTF_8);
-
-            // Convert JSON string into List of expenses
-            Type listType = new TypeToken<List<Expense>>(){}.getType();
-            List<Expense> expensesList = new Gson().fromJson(jsonString, listType);
-
-            // Add new expense to the list and save it back to JSON file
-            expensesList.add(expense);
-            jsonString = new Gson().toJson(expensesList);
-            saveDataToFile(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
+            Double.parseDouble(amount);
+            pw.println(getDate("day") + "-" + getDate("hour") + ":" + getDate("minute") + " [" + name + "] <" + amount + ">");
+            pw.flush();
+        } catch (NumberFormatException e) {
+            showToast("请输入正确金额");
         }
     }
 
-    private void saveDataToFile(String data) {
-        try {
-            FileOutputStream outputStream = getActivity().openFileOutput("expenses.json", Context.MODE_PRIVATE);
-            outputStream.write(data.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    public void onSaveButtonClicked(View view) throws IOException {
+        // Get the title and content from the EditText views
+        String expenseName = expenseNameEditText.getText().toString();
+        String expenseAmount = expenseAmountEditText.getText().toString();
+
+        // Save the title and content to the database
+        saveExpenseData(expenseName, expenseAmount);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 }
-
-//
-//public class HomeFragment extends Fragment {
-//
-//    private FragmentHomeBinding binding;
-//
-//    public View onCreateView(@NonNull LayoutInflater inflater,
-//                             ViewGroup container, Bundle savedInstanceState) {
-//        HomeViewModel homeViewModel =
-//                new ViewModelProvider(this).get(HomeViewModel.class);
-//
-//        binding = FragmentHomeBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-//
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-//        return root;
-//    }
-//
-
-//}

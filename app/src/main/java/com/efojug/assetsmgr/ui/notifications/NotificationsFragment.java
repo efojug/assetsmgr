@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {

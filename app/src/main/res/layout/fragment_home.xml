@@ -32,9 +32,20 @@
 
         <Button
             android:id="@+id/add_expense_button"
+            android:onClick="onSaveButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="添加"/>
+
+        <TextView
+            android:id="@+id/log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:onClick="showLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
