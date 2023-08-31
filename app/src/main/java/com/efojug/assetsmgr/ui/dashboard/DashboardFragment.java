@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
@@ -91,14 +90,12 @@ public class DashboardFragment extends Fragment {
         entries.add(new PieEntry(5.0f, "Healthcare"));
         entries.add(new PieEntry(10.0f, "Other"));
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(new int [] {
-                Color.rgb(255,183,132),
-                Color.rgb(255,148,94),
-                Color.rgb(255,102,102),
-                Color.rgb(255,220,105),
-                Color.rgb(148,159,177),
-                Color.rgb(208,205,255),
-        });
+        dataSet.setColors(Color.rgb(255, 183, 132),
+                Color.rgb(255, 148, 94),
+                Color.rgb(255, 102, 102),
+                Color.rgb(255, 220, 105),
+                Color.rgb(148, 159, 177),
+                Color.rgb(208, 205, 255));
         dataSet.setValueTextColor(Color.WHITE);
         IPieDataSet iDataSet = dataSet;
         PieData data = new PieData(iDataSet);
@@ -177,13 +174,13 @@ public class DashboardFragment extends Fragment {
             entries.add(new PieEntry(amount.floatValue(), category));
         }
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(new int [] {
-                Color.rgb(255,183,132),
-                Color.rgb(255,148,94),
-                Color.rgb(255,102,102),
-                Color.rgb(255,220,105),
-                Color.rgb(148,159,177),
-                Color.rgb(208,205,255),
+        dataSet.setColors(new int[]{
+                Color.rgb(255, 183, 132),
+                Color.rgb(255, 148, 94),
+                Color.rgb(255, 102, 102),
+                Color.rgb(255, 220, 105),
+                Color.rgb(148, 159, 177),
+                Color.rgb(208, 205, 255),
         });
         dataSet.setValueTextColor(Color.WHITE);
         IPieDataSet iDataSet = dataSet;
@@ -219,6 +216,7 @@ public class DashboardFragment extends Fragment {
         updateDashboard();
         Toast.makeText(getActivity(), "Expense added successfully", Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

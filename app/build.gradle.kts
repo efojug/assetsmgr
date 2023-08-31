@@ -26,16 +26,26 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
+kotlin {
+    jvmToolchain(8)
+}
+
 dependencies {
+    implementation("io.insert-koin:koin-android:3.4.3")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

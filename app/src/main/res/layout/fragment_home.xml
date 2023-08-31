@@ -9,43 +9,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="添加支出"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/expense_name_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="支出名称"/>
+            android:hint="支出名称" />
 
         <EditText
             android:id="@+id/expense_amount_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="支出金额"/>
+            android:hint="支出金额" />
 
         <Button
             android:id="@+id/add_expense_button"
-            android:onClick="onSaveButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="添加"/>
-
-        <TextView
-            android:id="@+id/log"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:onClick="showLog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:onClick="onSaveButtonClicked"
+            android:text="添加" />
 
     </LinearLayout>
 
