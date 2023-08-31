@@ -43,6 +43,11 @@
             android:onClick="onSaveButtonClicked"
             android:text="添加" />
 
+        <Spinner
+            android:id="@+id/expense_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
