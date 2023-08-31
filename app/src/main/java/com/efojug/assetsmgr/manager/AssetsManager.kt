@@ -7,8 +7,10 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 data class Assets(
     val amount: Float, val type: Type, val date: Long = System.currentTimeMillis()
@@ -40,8 +42,14 @@ class AssetsManager(
         dataStore.data
             .map {
                 val set = it[ASSETS_SET_KEY] ?: setOf()
-                set.map {
-                    gson.fromJson(it, Assets::class.java)
-                }
+                set.map { gson.fromJson(it, Assets::class.java) }
             }
+
+    fun getAllExpensesBlock(): List<Assets> = runBlocking {
+        val tempList = mutableListOf<Assets>()
+        getAllExpenses().collect {
+             tempList.addAll(it)
+        }
+        tempList
+    }
 }
