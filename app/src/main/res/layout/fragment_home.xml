@@ -36,17 +36,17 @@
             android:layout_height="wrap_content"
             android:hint="支出金额" />
 
+        <Spinner
+            android:id="@+id/expense_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/add_expense_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onSaveButtonClicked"
             android:text="添加" />
-
-        <Spinner
-            android:id="@+id/expense_type_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
