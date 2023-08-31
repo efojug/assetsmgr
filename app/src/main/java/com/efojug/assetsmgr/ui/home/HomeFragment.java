@@ -101,6 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Save the title and content to the database
 //        saveExpenseData(expenseName, expenseAmount);
         try {
+//            TODO 下拉框选择类型
             ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).addExpenses(expenseName, Float.parseFloat(expenseAmount));
             showToast("添加成功");
         } catch (NumberFormatException e) {
