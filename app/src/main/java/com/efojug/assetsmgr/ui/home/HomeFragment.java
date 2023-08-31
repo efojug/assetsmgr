@@ -85,6 +85,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mExpenseType);
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        expenseTypeSpinner.setAdapter(mAdapter);
+        expenseTypeSpinner.setSelection(0, true);
+        mAdapter.notifyDataSetChanged();
 
         expenseTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -132,7 +135,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        saveExpenseData(expenseName, expenseAmount);
         try {
 //            TODO 下拉框选择类型
-            ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).addExpenses(expenseName, Float.parseFloat(expenseAmount));
+//            ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).addExpenses(expenseName, Float.parseFloat(expenseAmount));
             showToast("添加成功");
         } catch (NumberFormatException e) {
             showToast("请输入正确金额");
