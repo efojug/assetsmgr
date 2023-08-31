@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
 ///////////////////////////////////////////////////////////////////////////////////////////////
             // 修改 JSON 文件
             modifyExpense(MainActivity.this, "expenses.json", "Shopping", 50.0);
-
-            // 再次读取 JSON 文件并显示
-            jsonString = readJSONStringFromFile(MainActivity.this, "expenses.json");
-            //输出jsonString
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//            mTextView.setText(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }
