@@ -86,7 +86,6 @@ public class DashboardFragment extends Fragment {
             refreshChartData(assets);
             return Unit.INSTANCE;
         });
-
         return root;
     }
 

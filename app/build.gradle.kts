@@ -1,3 +1,7 @@
+import com.google.api.ProjectProperties
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,16 +9,14 @@ plugins {
 
 android {
     namespace = "com.efojug.assetsmgr"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.efojug.assetsmgr"
         minSdk = 30
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        targetSdk = 32
+        versionCode = project.versionCode
+        versionName = "2.3"
     }
 
     buildTypes {
@@ -32,9 +34,29 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding = true
     }
+}
+
+val project by lazy { projectProperties() }
+
+fun projectProperties(): ProjectProperties {
+    val props = Properties().apply {
+        file("version.properties").inputStream().use { load(it) }
+    }
+    val versionCode = props.getProperty("VERSION_CODE", "1").toInt()
+    return object : ProjectProperties {
+        override var versionCode: Int = versionCode
+    }
+}
+
+interface ProjectProperties {
+    var versionCode: Int
 }
 
 kotlin {
@@ -44,10 +66,14 @@ kotlin {
 dependencies {
     implementation("io.insert-koin:koin-android:3.4.3")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
     implementation("androidx.core:core-ktx:1.10.1")
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.compose.ui:ui:1.5.0")
+    implementation("androidx.compose.material:material:1.5.0")
+    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling-android:1.5.0")
+    implementation("androidx.compose.foundation:foundation:1.5.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
