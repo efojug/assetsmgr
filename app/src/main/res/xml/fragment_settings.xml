@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="notifications"
         android:title="接收通知"
         android:summary="允许应用在接收到新消息时发送通知"
@@ -10,19 +10,17 @@
     <PreferenceCategory
         android:title="外观">
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:key="dark_mode"
             android:title="深色模式"
             android:summary="启用深色主题"
             android:defaultValue="false" />
 
-        <!--        <ListPreference-->
-        <!--            android:key="font_size"-->
-        <!--            android:title="字体大小"-->
-        <!--            android:summary="选择应用文本的字体大小"-->
-        <!--            android:defaultValue="medium"-->
-        <!--            android:entries="@array/font_sizes"-->
-        <!--            android:entryValues="@array/font_size_values" />-->
+        <SwitchPreferenceCompat
+            android:key="auto_dark_mode"
+            android:title="深色模式跟随系统"
+            android:summary="启用后，深色模式无法手动切换"
+            android:defaultValue="true" />
 
         <EditTextPreference
             android:key="username"
