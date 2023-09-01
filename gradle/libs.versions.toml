@@ -13,5 +13,5 @@ ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
-koin = { group = "io.insert-koin", name = "koin-androidx-compose", version = "3.4.5" }
+koin = { group = "io.insert-koin", name = "koin-android", version = "3.4.3" }
 data-store = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }

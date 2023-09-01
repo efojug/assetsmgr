@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
 import com.efojug.assetsmgr.util.runInUiThread
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 data class Expense(
@@ -54,6 +55,13 @@ class ExpenseManager(
                     preferences[ASSETS_SET_KEY] = newSet
                 }
             }
+        }
+    }
+
+    suspend fun getAllExpense(): List<Expense> {
+        val jsonList = dataStore.data.first()[ASSETS_SET_KEY] ?: setOf()
+        return jsonList.map {
+            gson.fromJson(it, Expense::class.java)
         }
     }
 
