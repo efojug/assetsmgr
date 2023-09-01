@@ -19,7 +19,6 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private SharedPreferences mSharedPreferences;
     private boolean isDarkModeEnabled;
     private boolean isAutoDarkModeEnabled;
 
