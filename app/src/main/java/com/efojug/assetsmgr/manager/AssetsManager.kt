@@ -5,12 +5,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
+import com.efojug.assetsmgr.util.runInUiThread
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 data class Expenses(
     val amount: Float,
@@ -57,7 +56,7 @@ class AssetsManager(
     fun getAllExpensesBlock(callback: (List<Expenses>) -> Unit) = ioScope.launch {
         dataStore.data.collect {
             val jsonSet = it[ASSETS_SET_KEY] ?: setOf()
-            withContext(Dispatchers.Main) {
+            runInUiThread {
                 callback(
                     jsonSet.map { gson.fromJson(it, Expenses::class.java) }
                 )
