@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
-import com.efojug.assetsmgr.manager.Assets;
+import com.efojug.assetsmgr.manager.Expenses;
 import com.efojug.assetsmgr.manager.AssetsManager;
-import com.efojug.assetsmgr.ui.notifications.NotificationsViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -26,31 +25,40 @@ import org.koin.java.KoinJavaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import kotlin.Unit;
 
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     private PieChart pieChart;
+    private TextView totalTextView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        pieChart = root.findViewById(R.id.pie_chart);
-
-        List<Assets> assetsList = ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).getAllExpensesBlock();
+    public void refreshChartData(List<Expenses> expensesList) {
         float total = 0f;
 
-        for (Assets assets : assetsList) {
-            total += assets.getAmount();
+        for (Expenses expenses : expensesList) {
+            total += expenses.getAmount();
         }
+
+        totalTextView.setText("总支出: " + total + "元");
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (Assets assets : assetsList) {
-            entries.add(new PieEntry((assets.getAmount() / total) * 100, assets.getType().getChinese()));
+        for (Expenses.Type type : Expenses.Type.values()) {
+            AtomicReference<Float> floatReference = new AtomicReference<>(0f);
+
+            expensesList
+                    .stream()
+                    .filter(expenses -> expenses.getType() == type)
+                    .forEach(t -> {
+                        floatReference.updateAndGet(v -> v + t.getAmount());
+                    });
+
+            if (floatReference.get() > 0f) {
+                entries.add(new PieEntry((floatReference.get() / total) * 100, type.getChinese()));
+            }
         }
 
         // 设置饼图样式
@@ -65,6 +73,20 @@ public class DashboardFragment extends Fragment {
         pieChart.getLegend().setEnabled(false);
         pieChart.setUsePercentValues(true);
         pieChart.invalidate();
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        pieChart = root.findViewById(R.id.pie_chart);
+        totalTextView = root.findViewById(R.id.total_text_view);
+
+        ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).getAllExpensesBlock(assets -> {
+            refreshChartData(assets);
+            return Unit.INSTANCE;
+        });
+
         return root;
     }
 

@@ -6,12 +6,13 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
-data class Assets(
+data class Expenses(
     val amount: Float,
     val type: Type,
     val remark: String = "",
@@ -37,8 +38,8 @@ class AssetsManager(
     private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
     private val gson = Gson()
 
-    fun addExpenses(assets: Assets) {
-        val json = gson.toJson(assets)
+    fun addExpenses(expenses: Expenses) {
+        val json = gson.toJson(expenses)
 
         ioScope.launch {
             dataStore.edit {
@@ -47,20 +48,20 @@ class AssetsManager(
         }
     }
 
-    fun getAllExpenses(): Flow<List<Assets>> =
+    fun getAllExpenses(): Flow<List<Expenses>> =
         dataStore.data.map {
             val set = it[ASSETS_SET_KEY] ?: setOf()
-            set.map { gson.fromJson(it, Assets::class.java) }
+            set.map { gson.fromJson(it, Expenses::class.java) }
         }
 
-    fun getAllExpensesBlock(): List<Assets> = runBlocking {
-        val tempList = mutableListOf<Assets>()
+    fun getAllExpensesBlock(callback: (List<Expenses>) -> Unit) = ioScope.launch {
         dataStore.data.collect {
-            val set = it[ASSETS_SET_KEY] ?: setOf()
-            tempList.addAll(
-                set.map { gson.fromJson(it, Assets::class.java) }
-            )
+            val jsonSet = it[ASSETS_SET_KEY] ?: setOf()
+            withContext(Dispatchers.Main) {
+                callback(
+                    jsonSet.map { gson.fromJson(it, Expenses::class.java) }
+                )
+            }
         }
-        tempList
     }
 }
