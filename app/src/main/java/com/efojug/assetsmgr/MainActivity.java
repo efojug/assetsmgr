@@ -20,6 +20,8 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
     数据导出
     完善设置页面
     Dashboard左滑删除/编辑
+    Dashboard右上角调整月份，以月份显示图标
+    Dashboard ExpenseList左滑修改和删除
  */
 
 public class MainActivity extends AppCompatActivity {
