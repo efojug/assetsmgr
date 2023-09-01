@@ -25,7 +25,7 @@ data class Expenses(
         companion object {
             @JvmStatic
             fun fromChinese(chinese: String): Type? {
-                return entries.firstOrNull { it.chinese == chinese }
+                return values().firstOrNull { it.chinese == chinese }
             }
         }
     }

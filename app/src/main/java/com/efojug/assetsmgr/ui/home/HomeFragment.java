@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentHomeBinding;
-import com.efojug.assetsmgr.manager.Expenses;
 import com.efojug.assetsmgr.manager.AssetsManager;
+import com.efojug.assetsmgr.manager.Expenses;
 
 import org.koin.java.KoinJavaComponent;
 
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
         expenseTypeSpinner = root.findViewById(R.id.expense_type_spinner);
         //创建列表
         mExpenseType = new ArrayList<>();
-        for (Expenses.Type type : Expenses.Type.getEntries()) {
+        for (Expenses.Type type : Expenses.Type.values()) {
             mExpenseType.add(type.getChinese());
         }
         //创建适配器

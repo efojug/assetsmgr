@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.compose.ui.platform.ComposeView;
 import androidx.fragment.app.Fragment;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
-import com.efojug.assetsmgr.manager.Expenses;
 import com.efojug.assetsmgr.manager.AssetsManager;
+import com.efojug.assetsmgr.manager.Expenses;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -84,6 +85,10 @@ public class DashboardFragment extends Fragment {
             refreshChartData(assets);
             return Unit.INSTANCE;
         });
+
+        ComposeView composeView = (ComposeView) root.findViewById(R.id.expense_list);
+        ExpenseListKt.bindView(this, composeView);
+
         return root;
     }
 
