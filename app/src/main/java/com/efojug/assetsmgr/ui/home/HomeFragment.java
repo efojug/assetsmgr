@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -40,8 +39,8 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        //初始化页面
         View root = binding.getRoot();
+        //初始化页面
         expenseAmountEditText = root.findViewById(R.id.expense_amount_edittext);
         expenseTypeSpinner = root.findViewById(R.id.expense_type_spinner);
         //创建列表
