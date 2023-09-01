@@ -52,9 +52,7 @@ public class DashboardFragment extends Fragment {
             expensesList
                     .stream()
                     .filter(expenses -> expenses.getType() == type)
-                    .forEach(t -> {
-                        floatReference.updateAndGet(v -> v + t.getAmount());
-                    });
+                    .forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
 
             if (floatReference.get() > 0f) {
                 entries.add(new PieEntry((floatReference.get() / total) * 100, type.getChinese()));
