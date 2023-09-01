@@ -22,26 +22,21 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
     Dashboard左滑删除/编辑
     Dashboard右上角调整月份，以月份显示图标
     Dashboard ExpenseList左滑修改和删除
+    Dashboard ExpenseList类型和名称互换
+    Dashboard预留底部控件防止 navView 覆盖 ExpenseList
  */
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding binding;
-    private boolean isDarkModeEnabled;
-    private boolean isAutoDarkModeEnabled;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.efojug.assetsmgr.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_settings)
                 .build();
@@ -52,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = ((Application) getApplication()).getSharedPreferences();
 
         // 读取深色模式选项的值
-        isDarkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
-        isAutoDarkModeEnabled = sharedPreferences.getBoolean("auto_dark_mode", false);
+        boolean isDarkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
+        boolean isAutoDarkModeEnabled = sharedPreferences.getBoolean("auto_dark_mode", false);
 
         // 根据深色模式选项的值设置应用程序的主题
         AppCompatDelegate.setDefaultNightMode(isAutoDarkModeEnabled ?
