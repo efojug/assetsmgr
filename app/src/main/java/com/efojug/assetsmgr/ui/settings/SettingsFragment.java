@@ -3,11 +3,8 @@ package com.efojug.assetsmgr.ui.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
@@ -23,11 +20,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         SwitchPreferenceCompat darkModeSwitch =
                 findPreference("dark_mode");
-        Boolean isDarkModeOn = darkModeSwitch.isChecked();
+        boolean isDarkModeOn = darkModeSwitch.isChecked();
 
         SwitchPreferenceCompat autoDarkModeSwitch =
                 findPreference("auto_dark_mode");
-        Boolean isAutoDarkModeOn = autoDarkModeSwitch.isChecked();
+        boolean isAutoDarkModeOn = autoDarkModeSwitch.isChecked();
 
         if (isAutoDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -38,9 +35,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             AppCompatDelegate.setDefaultNightMode(nightMode);
             darkModeSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean darkModeEnabled = (boolean) newValue;
-                int nightMode1 = darkModeEnabled ? AppCompatDelegate.MODE_NIGHT_YES :
+                int nightModeF = darkModeEnabled ? AppCompatDelegate.MODE_NIGHT_YES :
                         AppCompatDelegate.MODE_NIGHT_NO;
-                AppCompatDelegate.setDefaultNightMode(nightMode1);
+                AppCompatDelegate.setDefaultNightMode(nightModeF);
                 return true;
             });
         }
@@ -62,8 +59,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key){
-        if (key.equals("dark_mode")){
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("dark_mode")) {
             boolean isDarkModeOn = sharedPreferences.getBoolean(key, false);
             AppCompatDelegate.setDefaultNightMode(isDarkModeOn ?
                     AppCompatDelegate.MODE_NIGHT_YES :

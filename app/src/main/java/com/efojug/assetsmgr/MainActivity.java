@@ -1,14 +1,10 @@
 package com.efojug.assetsmgr;
 
 import android.content.SharedPreferences;
-import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.efojug.assetsmgr.util.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +13,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
 
 import com.efojug.assetsmgr.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private SharedPreferences mSharedPreferences;
+    private boolean isDarkModeEnabled;
+    private boolean isAutoDarkModeEnabled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Window window = getWindow();
@@ -41,5 +41,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        SharedPreferences sharedPreferences = ((Application) getApplication()).getSharedPreferences();
+
+        // 读取深色模式选项的值
+        isDarkModeEnabled = sharedPreferences.getBoolean("dark_mode", false);
+        isAutoDarkModeEnabled = sharedPreferences.getBoolean("auto_dark_mode", false);
+
+        // 根据深色模式选项的值设置应用程序的主题
+        AppCompatDelegate.setDefaultNightMode(isAutoDarkModeEnabled ?
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM :
+                (isDarkModeEnabled ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
     }
 }
