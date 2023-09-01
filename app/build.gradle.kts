@@ -1,11 +1,11 @@
-import com.google.api.ProjectProperties
-import java.io.FileInputStream
-import java.util.*
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+fun generateVersionCode(): Int =
+    Runtime.getRuntime().exec("git rev-list --all --count").inputStream.bufferedReader()
+        .readLines()[0].toInt()
 
 android {
     namespace = "com.efojug.assetsmgr"
@@ -15,7 +15,7 @@ android {
         applicationId = "com.efojug.assetsmgr"
         minSdk = 30
         targetSdk = 32
-        versionCode = project.versionCode
+        versionCode = generateVersionCode()
         versionName = "2.3"
     }
 
@@ -41,22 +41,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
-
-val project by lazy { projectProperties() }
-
-fun projectProperties(): ProjectProperties {
-    val props = Properties().apply {
-        file("version.properties").inputStream().use { load(it) }
-    }
-    val versionCode = props.getProperty("VERSION_CODE", "1").toInt()
-    return object : ProjectProperties {
-        override var versionCode: Int = versionCode
-    }
-}
-
-interface ProjectProperties {
-    var versionCode: Int
 }
 
 kotlin {
