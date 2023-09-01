@@ -64,7 +64,7 @@
         android:paddingEnd="16dp"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/expense_type_spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/expType"
@@ -97,17 +97,16 @@
         android:id="@+id/add_expense_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#A617E3"
         android:text="添加"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:background="#A617E3"
-        app:layout_constraintTop_toBottomOf="@+id/expense_amount_edittext"
-        app:layout_constraintStart_toEndOf="@+id/expense_amount_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintStart_toEndOf="@+id/expense_amount_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/expense_name_edittext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

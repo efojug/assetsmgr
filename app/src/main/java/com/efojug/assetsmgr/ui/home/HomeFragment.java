@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
                 if (Objects.equals(mSelectedData, "其他")) {
                     expenseNameEditText.setVisibility(View.VISIBLE);
                 } else {
-                    expenseNameEditText.setVisibility(View.GONE);
+                    expenseNameEditText.setVisibility(View.INVISIBLE);
                 }
                 //mSelectedData不可能为null，除非你的傻逼list出问题了
                 currentSelectedType = Assets.Type.fromChinese(mSelectedData);
