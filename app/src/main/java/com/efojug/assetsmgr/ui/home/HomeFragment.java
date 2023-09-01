@@ -80,17 +80,13 @@ public class HomeFragment extends Fragment {
                 ((AssetsManager) KoinJavaComponent.get(AssetsManager.class))
                         .addExpenses(new Expenses(amount, currentSelectedType, remark, System.currentTimeMillis()));
                 showToast("添加" + currentSelectedType.getChinese() + amount + "元");
+                expenseNameEditText.setText("");
+                expenseAmountEditText.setText("");
             } catch (NumberFormatException e) {
                 showToast("请输入正确金额");
             }
         });
         return root;
-    }
-
-    private void animateView(View v) {
-        TranslateAnimation ani = new TranslateAnimation(0, 0, 0, 100);
-        ani.setDuration(500);
-        v.startAnimation(ani);
     }
 
     @Override
