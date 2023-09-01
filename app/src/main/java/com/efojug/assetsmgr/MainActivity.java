@@ -23,7 +23,6 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
     Dashboard右上角调整月份，以月份显示图标
     Dashboard ExpenseList左滑修改和删除
     Dashboard ExpenseList类型和名称互换
-    Dashboard预留底部控件防止 navView 覆盖 ExpenseList
  */
 
 public class MainActivity extends AppCompatActivity {
