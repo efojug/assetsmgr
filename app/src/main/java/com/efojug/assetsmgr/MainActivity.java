@@ -16,6 +16,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
+/* TODO List
+    数据导出
+    完善设置页面
+    Dashboard左滑删除/编辑
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
