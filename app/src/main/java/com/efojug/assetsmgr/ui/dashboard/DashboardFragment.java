@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
-import com.efojug.assetsmgr.manager.AssetsManager;
-import com.efojug.assetsmgr.manager.Expenses;
+import com.efojug.assetsmgr.manager.ExpenseManager;
+import com.efojug.assetsmgr.manager.Expense;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -36,23 +36,23 @@ public class DashboardFragment extends Fragment {
     private PieChart pieChart;
     private TextView totalTextView;
 
-    public void refreshChartData(List<Expenses> expensesList) {
+    public void refreshChartData(List<Expense> expenseList) {
         float total = 0f;
 
-        for (Expenses expenses : expensesList) {
-            total += expenses.getAmount();
+        for (Expense expense : expenseList) {
+            total += expense.getAmount();
         }
 
         totalTextView.setText("总支出: " + total + "元");
 
         List<PieEntry> entries = new ArrayList<>();
 
-        for (Expenses.Type type : Expenses.Type.values()) {
+        for (Expense.Type type : Expense.Type.values()) {
             AtomicReference<Float> floatReference = new AtomicReference<>(0f);
 
-            expensesList
+            expenseList
                     .stream()
-                    .filter(expenses -> expenses.getType() == type)
+                    .filter(expense -> expense.getType() == type)
                     .forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
 
             if (floatReference.get() > 0f) {
@@ -81,7 +81,7 @@ public class DashboardFragment extends Fragment {
         pieChart = root.findViewById(R.id.pie_chart);
         totalTextView = root.findViewById(R.id.total_text_view);
 
-        ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).getAllExpensesBlock(assets -> {
+        ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).getAllExpensesBlock(assets -> {
             refreshChartData(assets);
             return Unit.INSTANCE;
         });

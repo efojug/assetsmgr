@@ -7,11 +7,9 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
 import com.efojug.assetsmgr.util.runInUiThread
 import com.google.gson.Gson
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-data class Expenses(
+data class Expense(
     val amount: Float,
     val type: Type,
     val remark: String = "",
@@ -31,14 +29,14 @@ data class Expenses(
     }
 }
 
-class AssetsManager(
+class ExpenseManager(
     private val dataStore: DataStore<Preferences>
 ) {
     private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
     private val gson = Gson()
 
-    fun addExpenses(expenses: Expenses) {
-        val json = gson.toJson(expenses)
+    fun addExpenses(expense: Expense) {
+        val json = gson.toJson(expense)
 
         ioScope.launch {
             dataStore.edit {
@@ -47,18 +45,24 @@ class AssetsManager(
         }
     }
 
-    fun getAllExpenses(): Flow<List<Expenses>> =
-        dataStore.data.map {
-            val set = it[ASSETS_SET_KEY] ?: setOf()
-            set.map { gson.fromJson(it, Expenses::class.java) }
+    fun removeExpenses(date: Long) {
+        ioScope.launch {
+            dataStore.edit { preferences ->
+                preferences[ASSETS_SET_KEY]?.let {
+                    val newSet =
+                        it.filter { gson.fromJson(it, Expense::class.java).date != date }.toSet()
+                    preferences[ASSETS_SET_KEY] = newSet
+                }
+            }
         }
+    }
 
-    fun getAllExpensesBlock(callback: (List<Expenses>) -> Unit) = ioScope.launch {
+    fun getAllExpensesBlock(callback: (List<Expense>) -> Unit) = ioScope.launch {
         dataStore.data.collect { it ->
             val jsonSet = it[ASSETS_SET_KEY] ?: setOf()
             runInUiThread {
                 callback(
-                    jsonSet.map { gson.fromJson(it, Expenses::class.java) }
+                    jsonSet.map { gson.fromJson(it, Expense::class.java) }
                 )
             }
         }
