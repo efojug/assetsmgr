@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,102 +7,228 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <LinearLayout
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/expenses_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:background="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="添加支出"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_weight="1.0">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加支出"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <!-- 支出类型 -->
+    <TextView
+        android:id="@+id/expType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支出类型"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expenses_textview"
+        app:layout_constraintBottom_toTopOf="@+id/expense_type_spinner"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
 
-        <EditText
-            android:id="@+id/expense_name_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:hint="支出名称"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp" />
+    <!-- 支出类型选择框 -->
+    <Spinner
+        android:id="@+id/expense_type_spinner"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@android:color/black"
+        android:background="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/expType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/expense_name_edittext"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/expense_amount_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:hint="支出金额"
-            android:inputType="numberDecimal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp"/>
+    <!-- 支出名称输入框 -->
+    <EditText
+        android:id="@+id/expense_name_edittext"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="支出名称"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/expense_type_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expType"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="支出类型"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+    <!-- 支出金额输入框 -->
+    <EditText
+        android:id="@+id/expense_amount_edittext"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="支出金额"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@+id/expense_type_spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_expense_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"/>
 
-        <Spinner
-            android:id="@+id/expense_type_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:spinnerMode="dropdown"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/add_expense_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="添加"
-            android:textSize="14sp"/>
-
-    </LinearLayout>
+    <!-- 添加支出按钮 -->
+    <Button
+        android:id="@+id/add_expense_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="添加"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:background="#A617E3"
+        app:layout_constraintTop_toBottomOf="@+id/expense_amount_edittext"
+        app:layout_constraintStart_toEndOf="@+id/expense_amount_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--上面是AI优化布局，下面是手搓-->
 
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/container"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".ui.home.HomeFragment">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/expenses_textview"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="添加支出"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/expType"-->
+<!--        android:layout_marginStart="34dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:text="支出类型"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/expense_type_spinner"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/expenses_textview"-->
+<!--        app:layout_constraintVertical_bias="0.499" />-->
+
+<!--    <Spinner-->
+<!--        android:id="@+id/expense_type_spinner"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:background="#FFFFFF"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:spinnerMode="dropdown"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/expType" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/expense_name_edittext"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:hint="支出名称"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:textSize="16sp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/expense_type_spinner"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/expType"-->
+<!--        app:layout_constraintWidth_default="wrap" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/expense_amount_edittext"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:hint="支出金额"-->
+<!--        android:inputType="numberDecimal"-->
+<!--        android:paddingStart="28dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/add_expense_button"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/expense_type_spinner" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/add_expense_button"-->
+<!--        android:layout_width="160dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="26dp"-->
+<!--        android:text="添加"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/expense_amount_edittext" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/container"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="match_parent"-->
 <!--    tools:context=".ui.home.HomeFragment">-->
 
 <!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
+<!--        android:layout_width="0dp"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_marginStart="16dp"-->
 <!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_weight="1.0"-->
+<!--        android:background="@android:color/white"-->
 <!--        android:orientation="vertical"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:paddingStart="8dp"-->
+<!--        android:paddingEnd="8dp"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintWidth_percent="0.9">-->
 
 <!--        <TextView-->
 <!--            android:layout_width="wrap_content"-->
@@ -112,29 +237,60 @@
 <!--            android:textSize="24sp"-->
 <!--            android:textStyle="bold" />-->
 
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginBottom="22dp"-->
+<!--            android:text="支出类型"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/expense_type_spinner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingEnd="16dp"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            android:textSize="16sp" />-->
+
 <!--        <EditText-->
 <!--            android:id="@+id/expense_name_edittext"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:hint="支出名称" />-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:hint="支出名称"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingEnd="16dp"-->
+<!--            android:textSize="16sp"-->
+<!--            android:visibility="gone" />-->
 
 <!--        <EditText-->
 <!--            android:id="@+id/expense_amount_edittext"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:hint="支出金额" />-->
-
-<!--        <Spinner-->
-<!--            android:id="@+id/expense_type_spinner"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
+<!--            android:layout_marginStart="-16dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:hint="支出金额"-->
+<!--            android:inputType="numberDecimal"-->
+<!--            android:paddingStart="28dp"-->
+<!--            android:paddingEnd="16dp"-->
+<!--            android:textSize="16sp" />-->
 
 <!--        <Button-->
 <!--            android:id="@+id/add_expense_button"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:onClick="onSaveButtonClicked"-->
-<!--            android:text="添加" />-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingEnd="16dp"-->
+<!--            android:text="添加"-->
+<!--            android:textSize="14sp" />-->
 
 <!--    </LinearLayout>-->
 
