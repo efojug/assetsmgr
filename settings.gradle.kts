@@ -10,8 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
-        jcenter()
+        maven(url = "https://jitpack.io")
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
+        maven(url = "https://api.xposed.info/")
+        maven(url = "https://s01.oss.sonatype.org/content/repositories/releases")
     }
 }
 

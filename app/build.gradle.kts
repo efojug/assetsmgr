@@ -2,6 +2,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.12"
 }
 
 fun generateVersionCode(): Int =
@@ -35,12 +36,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     buildFeatures {
@@ -65,6 +66,9 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
 
+    implementation("com.highcapable.yukihookapi:api:1.1.11")
+    compileOnly("de.robv.android.xposed:api:82")
+    ksp("com.highcapable.yukihookapi:ksp-xposed:1.1.11")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
