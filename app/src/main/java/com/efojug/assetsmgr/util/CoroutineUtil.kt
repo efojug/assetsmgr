@@ -6,6 +6,6 @@ import kotlinx.coroutines.withContext
 
 val ioScope = CoroutineScope(Dispatchers.IO)
 
-suspend fun runInUiThread(block: suspend () -> Unit) = withContext(Dispatchers.IO) {
+suspend fun runInUiThread(block: suspend () -> Unit) = withContext(Dispatchers.Main) {
     block.invoke()
 }
