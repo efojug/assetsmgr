@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentHomeBinding;
-import com.efojug.assetsmgr.manager.AssetsManager;
-import com.efojug.assetsmgr.manager.Expenses;
+import com.efojug.assetsmgr.manager.ExpenseManager;
+import com.efojug.assetsmgr.manager.Expense;
 
 import org.koin.java.KoinJavaComponent;
 
@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     private Spinner expenseTypeSpinner;
     private List<String> mExpenseType;
     private ArrayAdapter<String> mAdapter;
-    private Expenses.Type currentSelectedType = Expenses.Type.SchoolSupplies;
+    private Expense.Type currentSelectedType = Expense.Type.SchoolSupplies;
 
     private void showToast(String text) {
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
         expenseTypeSpinner = root.findViewById(R.id.expense_type_spinner);
         //创建列表
         mExpenseType = new ArrayList<>();
-        for (Expenses.Type type : Expenses.Type.values()) {
+        for (Expense.Type type : Expense.Type.values()) {
             mExpenseType.add(type.getChinese());
         }
         //创建适配器
@@ -58,8 +58,8 @@ public class HomeFragment extends Fragment {
         expenseTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                currentSelectedType = Expenses.Type.fromChinese(mAdapter.getItem(position));
-                expenseNameEditText.setVisibility(currentSelectedType == Expenses.Type.Other ? View.VISIBLE : View.INVISIBLE);
+                currentSelectedType = Expense.Type.fromChinese(mAdapter.getItem(position));
+                expenseNameEditText.setVisibility(currentSelectedType == Expense.Type.Other ? View.VISIBLE : View.INVISIBLE);
             }
 
             @Override
@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment {
             try {
                 float amount = Float.parseFloat(expenseAmount);
                 String remark = expenseNameEditText.getText().toString();
-                ((AssetsManager) KoinJavaComponent.get(AssetsManager.class))
-                        .addExpenses(new Expenses(amount, currentSelectedType, remark, System.currentTimeMillis()));
+                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class))
+                        .addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
                 showToast("添加" + currentSelectedType.getChinese() + amount + "元");
                 expenseNameEditText.setText("");
                 expenseAmountEditText.setText("");

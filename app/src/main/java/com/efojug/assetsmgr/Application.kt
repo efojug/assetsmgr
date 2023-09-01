@@ -3,7 +3,7 @@ package com.efojug.assetsmgr
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.efojug.assetsmgr.manager.AssetsManager
+import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.util.extension.dataStore
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -25,7 +25,7 @@ class Application : Application() {
 
             modules(
                 module {
-                    single { AssetsManager(applicationContext.dataStore) }
+                    single { ExpenseManager(applicationContext.dataStore) }
                 }
             )
         }
