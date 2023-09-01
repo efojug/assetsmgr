@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="notifications"
+        android:title="接收通知"
+        android:summary="允许应用在接收到新消息时发送通知"
+        android:defaultValue="true" />
+
+    <PreferenceCategory
+        android:title="外观">
+
+        <CheckBoxPreference
+            android:key="dark_mode"
+            android:title="深色模式"
+            android:summary="启用深色主题"
+            android:defaultValue="false" />
+
+        <!--        <ListPreference-->
+        <!--            android:key="font_size"-->
+        <!--            android:title="字体大小"-->
+        <!--            android:summary="选择应用文本的字体大小"-->
+        <!--            android:defaultValue="medium"-->
+        <!--            android:entries="@array/font_sizes"-->
+        <!--            android:entryValues="@array/font_size_values" />-->
+
+        <EditTextPreference
+            android:key="username"
+            android:title="用户名"
+            android:summary="您的用户名"
+            android:defaultValue="user123" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    tools:context=".ui.settings.SettingsFragment">-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

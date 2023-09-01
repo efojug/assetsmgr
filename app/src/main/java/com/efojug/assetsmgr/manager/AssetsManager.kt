@@ -54,7 +54,7 @@ class AssetsManager(
         }
 
     fun getAllExpensesBlock(callback: (List<Expenses>) -> Unit) = ioScope.launch {
-        dataStore.data.collect {
+        dataStore.data.collect { it ->
             val jsonSet = it[ASSETS_SET_KEY] ?: setOf()
             runInUiThread {
                 callback(
