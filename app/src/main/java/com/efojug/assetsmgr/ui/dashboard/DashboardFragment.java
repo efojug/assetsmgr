@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
+import com.efojug.assetsmgr.manager.Assets;
+import com.efojug.assetsmgr.manager.AssetsManager;
 import com.efojug.assetsmgr.ui.notifications.NotificationsViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -19,6 +21,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import org.koin.java.KoinJavaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +39,20 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         pieChart = root.findViewById(R.id.pie_chart);
+
+        List<Assets> assetsList = ((AssetsManager) KoinJavaComponent.get(AssetsManager.class)).getAllExpensesBlock();
+        float total = 0f;
+
+        for (Assets assets : assetsList) {
+            total += assets.getAmount();
+        }
+
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(20f, "资源 A"));
-        entries.add(new PieEntry(30f, "资源 B"));
-        entries.add(new PieEntry(50f, "资源 C"));
+
+        for (Assets assets : assetsList) {
+            entries.add(new PieEntry((assets.getAmount() / total) * 100, assets.getType().getChinese()));
+        }
+
         // 设置饼图样式
         PieDataSet pieDataSet = new PieDataSet(entries, "资源比例");
         pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);

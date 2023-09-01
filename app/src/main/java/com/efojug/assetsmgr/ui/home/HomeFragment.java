@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,21 +23,15 @@ import org.koin.java.KoinJavaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private EditText expenseAmountEditText;
     private EditText expenseNameEditText;
-    private EditText remarkEditText;
     private Spinner expenseTypeSpinner;
     private List<String> mExpenseType;
     private ArrayAdapter<String> mAdapter;
-    private int mSelectedPosition = 0;
-    //    private String mSelectedData = mExpenseType.get(0);
-    //他妈的为什么这里会空指针 我操你妈
-    private String mSelectedData = mExpenseType != null && !mExpenseType.isEmpty() ? mExpenseType.get(0) : "";
     private Assets.Type currentSelectedType = Assets.Type.SchoolSupplies;
 
     private void showToast(String text) {
@@ -51,7 +44,6 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         expenseAmountEditText = root.findViewById(R.id.expense_amount_edittext);
         expenseTypeSpinner = root.findViewById(R.id.expense_type_spinner);
-        remarkEditText = root.findViewById(R.id.expense_name_edittext);
         //创建列表
         mExpenseType = new ArrayList<>();
         for (Assets.Type type : Assets.Type.getEntries()) {
@@ -67,15 +59,8 @@ public class HomeFragment extends Fragment {
         expenseTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                mSelectedPosition = position;
-                mSelectedData = mAdapter.getItem(position);
-                if (Objects.equals(mSelectedData, "其他")) {
-                    expenseNameEditText.setVisibility(View.VISIBLE);
-                } else {
-                    expenseNameEditText.setVisibility(View.INVISIBLE);
-                }
-                //mSelectedData不可能为null，除非你的傻逼list出问题了
-                currentSelectedType = Assets.Type.fromChinese(mSelectedData);
+                currentSelectedType = Assets.Type.fromChinese(mAdapter.getItem(position));
+                expenseNameEditText.setVisibility(currentSelectedType == Assets.Type.Other ? View.VISIBLE : View.INVISIBLE);
             }
 
             @Override
@@ -87,18 +72,14 @@ public class HomeFragment extends Fragment {
         root.findViewById(R.id.add_expense_button).setOnClickListener(v -> {
             // Get the title and content from the EditText views
             String expenseAmount = expenseAmountEditText.getText().toString();
-            //在onClick时获取 :)
-            //默认选择第一项，始终不为null，除非你的傻逼list出问题了
-//            if (currentSelectedType == null) {
-//                showToast("请选择要添加的类型");
-//                return;
-//            }
 
             //保存数据
             try {
+                float amount = Float.parseFloat(expenseAmount);
+                String remark = expenseNameEditText.getText().toString();
                 ((AssetsManager) KoinJavaComponent.get(AssetsManager.class))
-                        .addExpenses(new Assets(Float.parseFloat(expenseAmount), currentSelectedType, remarkEditText.getText().toString(), System.currentTimeMillis()));
-                showToast(mSelectedData);
+                        .addExpenses(new Assets(amount, currentSelectedType, remark, System.currentTimeMillis()));
+                showToast("添加" + currentSelectedType.getChinese() + amount + "元");
             } catch (NumberFormatException e) {
                 showToast("请输入正确金额");
             }
@@ -106,7 +87,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void animateView(View v){
+    private void animateView(View v) {
         TranslateAnimation ani = new TranslateAnimation(0, 0, 0, 100);
         ani.setDuration(500);
         v.startAnimation(ani);
