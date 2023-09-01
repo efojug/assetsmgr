@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-import java.io.FileInputStream
 import java.util.*
 val versionProps = Properties().apply {
     file("version.properties").inputStream().use { load(it) }
