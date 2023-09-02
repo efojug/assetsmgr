@@ -23,13 +23,12 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
     Dashboard右上角调整月份，以月份显示图标
     Dashboard ExpenseList左滑修改和删除
     Dashboard ExpenseList类型和名称互换
+    Settings 编辑常用类型
  */
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Window window = getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         super.onCreate(savedInstanceState);
 
         com.efojug.assetsmgr.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
