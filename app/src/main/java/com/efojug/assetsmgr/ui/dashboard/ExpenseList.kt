@@ -38,13 +38,18 @@ fun Test() {
         LazyColumn {
             items(expenseList) {
                 Card(Modifier.padding(4.dp)) {
-                    Row(Modifier.fillMaxWidth().padding(2.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                text = it.remark,
-                                fontWeight = FontWeight.Bold
+                                text = it.type.chinese,
+                                fontWeight = FontWeight.Bold,
                             )
-                            Text(text = it.type.chinese, fontSize = 10.sp)
+                            Text(text = it.remark, fontSize = 10.sp)
                             Text(text = it.date.toString())
                         }
                         Text(text = it.amount.toString() + "元", fontWeight = FontWeight.Bold)

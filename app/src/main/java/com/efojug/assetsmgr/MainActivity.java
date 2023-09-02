@@ -18,12 +18,11 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
     数据导出
-    完善设置页面
-    Dashboard左滑删除/编辑
     Dashboard右上角调整月份，以月份显示图标
-    Dashboard ExpenseList左滑修改和删除
-    Dashboard ExpenseList类型和名称互换
+    Dashboard ExpenseList 左滑修改和删除
+    Dashboard ExpenseList 优化布局
     Settings 编辑常用类型
+    Settings 添加清除所有数据
  */
 
 public class MainActivity extends AppCompatActivity {
