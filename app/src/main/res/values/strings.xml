@@ -3,4 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_settings">Settings</string>
+    <string-array name="expense_type_list">
+        <item>学习用品</item>
+        <item>伙食</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="expense_type_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

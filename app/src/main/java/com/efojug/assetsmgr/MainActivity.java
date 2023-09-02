@@ -17,12 +17,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
-    数据导出
     Dashboard右上角调整月份，以月份显示图表
     Dashboard ExpenseList 左滑修改和删除
     Dashboard ExpenseList 优化布局
-    Settings 编辑常用类型
-    Settings 添加清除所有数据
+    Dashboard 添加生活费使用进度条，进度条上提示
+    Dashboard 添加上月结转
+    Settings 完善结转，设置生活费，设置告警额度，修改开支类型，清除生活费记录
+    Main 月初提醒获取生活费
+    Main 数据导出
+
  */
 
 public class MainActivity extends AppCompatActivity {
