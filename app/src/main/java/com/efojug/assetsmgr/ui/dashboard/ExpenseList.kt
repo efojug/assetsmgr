@@ -23,11 +23,17 @@ import com.efojug.assetsmgr.manager.Expense
 import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.ui.theme.AssetsManagerTheme
 import org.koin.core.context.GlobalContext
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun Test() {
     val expenseList = remember {
         mutableStateListOf<Expense>()
+    }
+
+    val dataFormatter = remember {
+        SimpleDateFormat("MM月dd日HH时mm分")
     }
 
     LaunchedEffect(null) {
@@ -50,7 +56,7 @@ fun Test() {
                                 fontWeight = FontWeight.Bold,
                             )
                             Text(text = it.remark, fontSize = 10.sp)
-                            Text(text = it.date.toString())
+                            Text(text = dataFormatter.format(Date(it.date)))
                         }
                         Text(text = it.amount.toString() + "元", fontWeight = FontWeight.Bold)
                     }

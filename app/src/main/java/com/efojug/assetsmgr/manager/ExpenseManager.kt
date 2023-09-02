@@ -3,11 +3,13 @@ package com.efojug.assetsmgr.manager
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
 import com.efojug.assetsmgr.util.runInUiThread
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 data class Expense(
@@ -33,8 +35,13 @@ data class Expense(
 class ExpenseManager(
     private val dataStore: DataStore<Preferences>
 ) {
+    private val TOTAL_AMOUNT_KEY = floatPreferencesKey("total_amount")
     private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
     private val gson = Gson()
+
+    suspend fun getTotalAmount(): Float {
+        return dataStore.data.first()[TOTAL_AMOUNT_KEY] ?: 0f
+    }
 
     fun addExpenses(expense: Expense) {
         val json = gson.toJson(expense)
@@ -42,6 +49,7 @@ class ExpenseManager(
         ioScope.launch {
             dataStore.edit {
                 it[ASSETS_SET_KEY] = (it[ASSETS_SET_KEY] ?: setOf()) + json
+                it[TOTAL_AMOUNT_KEY] = (it[TOTAL_AMOUNT_KEY] ?: 0f) + expense.amount
             }
         }
     }
@@ -50,9 +58,17 @@ class ExpenseManager(
         ioScope.launch {
             dataStore.edit { preferences ->
                 preferences[ASSETS_SET_KEY]?.let {
+                    var totalAmount = preferences[TOTAL_AMOUNT_KEY] ?: 0f
                     val newSet =
-                        it.filter { gson.fromJson(it, Expense::class.java).date != date }.toSet()
+                        it.filter {
+                            val expense = gson.fromJson(it, Expense::class.java)
+                            if (expense.date == date) {
+                                totalAmount -= expense.amount
+                            }
+                            expense.date != date
+                        }.toSet()
                     preferences[ASSETS_SET_KEY] = newSet
+                    preferences[TOTAL_AMOUNT_KEY] = totalAmount.coerceAtLeast(0f)
                 }
             }
         }
