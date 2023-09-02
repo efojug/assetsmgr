@@ -17,13 +17,13 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
-    Dashboard右上角调整月份，以月份显示图表
-    Dashboard ExpenseList 左滑修改和删除
-    Dashboard ExpenseList 优化布局
-    Dashboard 添加生活费使用进度条，进度条上提示
-    Dashboard 添加上月结转
-    Settings 完善结转，设置生活费，设置告警额度，修改开支类型，清除生活费记录
-    Main 月初提醒获取生活费
+    Dashboard 右上角调整月份，以月份显示图表 -> efojug
+    Dashboard ExpenseList 左滑修改和删除 -> DeSu, efojug
+    Dashboard 优化ExpenseList的margin -> DeSu
+    Dashboard 添加生活费使用进度条，进度条上提示 -> efojug
+    Dashboard 添加上月结转 -> efojug
+    Settings 完善结转 -> efojug, DeSu，设置生活费 -> efojug, DeSu，设置告警额度 -> efojug，修改开支类型 -> efojug, DeSu，清除生活费记录 -> efojug
+    Main 月初提醒获取生活费 -> efojug
     Main 数据导出
 
  */
