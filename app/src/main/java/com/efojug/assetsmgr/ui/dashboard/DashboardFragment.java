@@ -81,6 +81,8 @@ public class DashboardFragment extends Fragment {
         pieChart = root.findViewById(R.id.pie_chart);
         totalTextView = root.findViewById(R.id.total_text_view);
 
+        pieChart.setDrawHoleEnabled(false);
+
         ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).getAllExpensesBlock(assets -> {
             refreshChartData(assets);
             return Unit.INSTANCE;

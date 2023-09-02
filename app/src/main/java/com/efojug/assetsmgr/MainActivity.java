@@ -18,7 +18,7 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
     数据导出
-    Dashboard右上角调整月份，以月份显示图标
+    Dashboard右上角调整月份，以月份显示图表
     Dashboard ExpenseList 左滑修改和删除
     Dashboard ExpenseList 优化布局
     Settings 编辑常用类型
@@ -33,12 +33,7 @@ public class MainActivity extends AppCompatActivity {
         com.efojug.assetsmgr.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_settings)
-                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         SharedPreferences sharedPreferences = ((Application) getApplication()).getSharedPreferences();
