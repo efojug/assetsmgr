@@ -18,6 +18,8 @@ import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentHomeBinding;
 import com.efojug.assetsmgr.manager.ExpenseManager;
 import com.efojug.assetsmgr.manager.Expense;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.koin.java.KoinJavaComponent;
 
@@ -27,7 +29,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private EditText expenseAmountEditText;
+    private TextInputEditText expenseAmountEditText;
     private EditText expenseNameEditText;
     private Spinner expenseTypeSpinner;
     private List<String> mExpenseType;

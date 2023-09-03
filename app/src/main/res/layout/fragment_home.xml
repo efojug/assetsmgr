@@ -1,9 +1,8 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <!-- 标题 -->
     <TextView
@@ -15,8 +14,8 @@
         android:textAlignment="center"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 支出类型 -->
@@ -24,82 +23,88 @@
         android:id="@+id/expType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="支出类型"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenses_textview"
         app:layout_constraintBottom_toTopOf="@+id/expense_type_spinner"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expenses_textview" />
 
     <!-- 支出类型选择框 -->
     <Spinner
         android:id="@+id/expense_type_spinner"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/spinner_border"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:background="@drawable/spinner_border"
-        app:layout_constraintTop_toBottomOf="@+id/expType"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/expense_name_edittext"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expType" />
 
     <!-- 支出名称输入框 -->
     <EditText
         android:id="@+id/expense_name_edittext"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
         android:hint="支出名称"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/expense_type_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expType"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"/>
+        app:layout_constraintStart_toEndOf="@+id/expense_type_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/expType" />
 
     <!-- 支出金额输入框 -->
-    <EditText
-        android:id="@+id/expense_amount_edittext"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_input_layout"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
         android:hint="支出金额"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@+id/expense_type_spinner"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_expense_button"
         app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expense_type_spinner">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/expense_amount_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- 添加支出按钮 -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_expense_button"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
         android:text="添加"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/expense_amount_edittext"
+        app:layout_constraintStart_toEndOf="@+id/amount_input_layout"
         app:layout_constraintTop_toBottomOf="@+id/expense_name_edittext" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
