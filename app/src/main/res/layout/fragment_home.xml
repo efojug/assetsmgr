@@ -72,7 +72,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/amount_input_layout"
         android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
         android:hint="支出金额"
@@ -96,7 +96,7 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_expense_button"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="50dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
