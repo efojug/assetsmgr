@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="notifications"
-        android:title="通知"
-        android:summary="允许应用发送提示通知"
-        android:defaultValue="false" />
-
-    <PreferenceCategory
-        android:title="外观">
+    <PreferenceCategory android:title="外观">
 
         <SwitchPreferenceCompat
+            android:defaultValue="false"
             android:key="dark_mode"
-            android:title="深色模式"
             android:summary="启用深色主题"
-            android:defaultValue="false" />
+            android:title="深色模式" />
 
         <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="auto_dark_mode"
-            android:title="自动切换深色模式"
             android:summary="启用后，深色模式将跟随系统"
-            android:defaultValue="true" />
+            android:title="自动切换深色模式" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="生活费设置">
+    <PreferenceCategory android:title="生活费设置">
 
-        <SwitchPreferenceCompat
-            android:key="auto_switch_last_month"
-            android:title="结转剩余生活费"
-            android:summary="自动将上个月剩余的生活费添加到这个月的生活费"
-            android:defaultValue="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="calc_money"
+            android:summary="启用自动计算生活费的相关功能"
+            android:title="生活费计算" />
 
         <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="calc_money"
             android:key="month_money"
-            android:title="设置每个月的生活费"
-            android:summary="点击以设置每个月的生活费"
-            android:defaultValue="0"/>
+            android:summary="点击以设置每个月的生活费(仅支持整数)"
+            android:title="设置每个月的生活费" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:dependency="calc_money"
+            android:key="auto_add_last_month"
+            android:summary="自动将上个月剩余的生活费添加到这个月"
+            android:title="结转剩余生活费" />
 
         <MultiSelectListPreference
-            android:key="money_type"
-            android:title="设置您常用的开支类型"
-            android:summary="您可以在这里添加您经常将生活费花费的地方"
             android:entries="@array/expense_type_list"
-            android:entryValues="@array/expense_type_values"/>
+            android:entryValues="@array/expense_type_values"
+            android:key="money_type"
+            android:summary="您可以在这里添加您经常花钱的地方"
+            android:title="设置您常用的开支类型" />
 
         <Preference
             android:key="clear_data"
-            android:title="清除所有生活费记录"
-            android:summary="点击将会清除所有生活费记录(注意: 此操作不可恢复)"
-            android:layout="@layout/clear_data_layout" />
+            android:layout="@layout/clear_data_layout"
+            android:summary="点击将会清除所有生活费记录(此操作不可恢复)"
+            android:title="清除所有记录" />
 
     </PreferenceCategory>
 

@@ -13,6 +13,16 @@
         android:text="加载中..."
         android:textSize="18sp" />
 
+    <ProgressBar
+        android:id="@+id/money_progress"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:indeterminate="false" />
+
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
@@ -31,7 +41,6 @@
         android:id="@+id/expense_list"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="105dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

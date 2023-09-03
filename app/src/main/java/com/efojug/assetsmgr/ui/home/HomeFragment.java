@@ -1,5 +1,7 @@
 package com.efojug.assetsmgr.ui.home;
 
+import static com.efojug.assetsmgr.util.Utils.showSnackbar;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,10 +34,6 @@ public class HomeFragment extends Fragment {
     private ArrayAdapter<String> mAdapter;
     private Expense.Type currentSelectedType = Expense.Type.SchoolSupplies;
 
-    private void showToast(String text) {
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -59,7 +56,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 currentSelectedType = Expense.Type.fromChinese(mAdapter.getItem(position));
-                expenseNameEditText.setVisibility(currentSelectedType == Expense.Type.Other ? View.VISIBLE : View.INVISIBLE);
+                if (currentSelectedType == Expense.Type.Other) {
+                    expenseNameEditText.setVisibility(View.VISIBLE);
+                } else {
+                    expenseNameEditText.setText("");
+                    expenseNameEditText.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -74,14 +76,15 @@ public class HomeFragment extends Fragment {
             //保存数据
             try {
                 float amount = Float.parseFloat(expenseAmount);
+                if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
                 String remark = expenseNameEditText.getText().toString();
                 ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class))
                         .addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
-                showToast("添加" + currentSelectedType.getChinese() + amount + "元");
+                showSnackbar(getView(), "添加" + currentSelectedType.getChinese() + amount + "元");
                 expenseNameEditText.setText("");
                 expenseAmountEditText.setText("");
-            } catch (NumberFormatException e) {
-                showToast("请输入正确金额");
+            } catch (Exception e) {
+                showSnackbar(getView(), "请输入正确金额");
             }
         });
         return root;

@@ -42,7 +42,7 @@ fun Test() {
 
     Column(Modifier.fillMaxSize()) {
         LazyColumn {
-            items(expenseList) {
+            items(expenseList.reversed()) {
                 Card(Modifier.padding(4.dp)) {
                     Row(
                         Modifier
