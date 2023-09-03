@@ -30,11 +30,13 @@
         android:layout_margin="8dp" />
 
     <TextView
+        android:id="@+id/show_exp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:layout_margin="6dp"
         android:text="支出记录"
+        android:layout_gravity="center"
         android:textSize="16sp" />
 
     <androidx.compose.ui.platform.ComposeView

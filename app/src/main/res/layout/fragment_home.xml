@@ -89,16 +89,14 @@
         android:layout_marginBottom="8dp"/>
 
     <!-- 添加支出按钮 -->
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_expense_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="添加"
         android:textSize="18sp"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/expense_amount_edittext"

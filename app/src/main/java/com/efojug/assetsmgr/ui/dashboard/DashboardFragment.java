@@ -49,6 +49,7 @@ public class DashboardFragment extends Fragment {
         ProgressBar money_progress = root.findViewById(R.id.money_progress);
         PieChart pieChart = root.findViewById(R.id.pie_chart);
         TextView totalTextView = root.findViewById(R.id.total_text_view);
+        ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "暂无支出记录" : "支出记录");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).getAllExpensesBlock(assets -> {
@@ -114,6 +115,7 @@ public class DashboardFragment extends Fragment {
                     money_progress.setVisibility(View.GONE);
                     showSnackbar(getView(), "未正确配置生活费");
                 }
+                money_progress.setVisibility(total == 0 ? View.GONE : View.VISIBLE);
             }, 50); // 延时获取
         } else {
             money_progress.setVisibility(View.GONE);
