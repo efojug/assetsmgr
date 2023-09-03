@@ -71,7 +71,6 @@ public class HomeFragment extends Fragment {
         root.findViewById(R.id.add_expense_button).setOnClickListener(v -> {
             // Get the title and content from the EditText views
             String expenseAmount = expenseAmountEditText.getText().toString();
-
             //保存数据
             try {
                 float amount = Float.parseFloat(expenseAmount);

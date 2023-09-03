@@ -40,13 +40,6 @@
             android:summary="点击以设置每个月的生活费"
             android:defaultValue="0"/>
 
-        <SeekBarPreference
-            android:key="warn_money"
-            android:title="设置生活费告警额度"
-            android:summary="设置该选项以在到达告警额度时通知您,设置为0不通知"
-            android:max="0"
-            app:showSeekBarValue="true"/>
-
         <MultiSelectListPreference
             android:key="money_type"
             android:title="设置您常用的开支类型"

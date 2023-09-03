@@ -22,10 +22,10 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
     Dashboard 优化ExpenseList的margin -> DeSu
     Dashboard 添加生活费使用进度条，进度条上提示 -> efojug
     Dashboard 添加上月结转 -> efojug
-    Settings 完善结转 -> efojug, DeSu，设置生活费 -> efojug, DeSu，设置告警额度 -> efojug，修改开支类型 -> efojug, DeSu，清除生活费记录 -> efojug
+    Settings 完善结转 -> efojug, DeSu，设置生活费 -> efojug, DeSu，修改开支类型 -> efojug, DeSu，清除生活费记录 -> efojug
     Main 月初提醒获取生活费 -> efojug
+    Main 将Toast修改底栏通知
     Main 数据导出
-
  */
 
 public class MainActivity extends AppCompatActivity {
