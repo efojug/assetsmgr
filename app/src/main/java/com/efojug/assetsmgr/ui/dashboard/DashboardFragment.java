@@ -58,16 +58,7 @@ public class DashboardFragment extends Fragment {
                 total += expense.getAmount();
             }
 
-            totalTextView.setText("支出" + total + "元");
-            if (sharedPreferences.getBoolean("calc_money", false)) {
-                if (!sharedPreferences.getString("month_money", "0").equals("0")) {
-                    try {
-                        totalTextView.setText("总额: " + Integer.parseInt(sharedPreferences.getString("month_money", "0")) + "元  " + totalTextView.getText() + "  剩余" + (Integer.parseInt(sharedPreferences.getString("month_money", "0")) - total) + "元");
-                    } catch (Exception e) {
-                        showSnackbar(getView(), "未正确配置生活费");
-                    }
-                } else showSnackbar(getView(), "未正确配置生活费");
-            }
+            totalTextView.setText((int) total == 0 ? "" : "支出" + total + "元");
 
             List<PieEntry> entries = new ArrayList<>();
 
@@ -103,36 +94,49 @@ public class DashboardFragment extends Fragment {
         ComposeView composeView = root.findViewById(R.id.expense_list);
         ExpenseListKt.bindView(this, composeView);
         new Handler().postDelayed(() -> {
-            ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "暂无支出记录" : "支出记录");
-            if (sharedPreferences.getBoolean("calc_money", false) && total != 0) {
-                if (!sharedPreferences.getString("month_money", "0").equals("0")) {
-                    try {
-                        money_progress.setMax(Integer.parseInt(sharedPreferences.getString("month_money", "")) * 100);
-                        money_progress.setVisibility(View.VISIBLE);
-                        money_progress.setProgress((int) (total * 100), true);
-                    } catch (Exception e) {
+            ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "" : "支出记录");
+
+            if ((int) total != 0) {
+                if (sharedPreferences.getBoolean("calc_money", false)) {
+                    if (!sharedPreferences.getString("month_money", "0").equals("0")) {
+                        try {
+                            totalTextView.setText("总额: " + Integer.parseInt(sharedPreferences.getString("month_money", "0")) + "元  " + totalTextView.getText() + "  剩余" + (Integer.parseInt(sharedPreferences.getString("month_money", "0")) - total) + "元");
+                        } catch (Exception e) {
+                            showSnackbar(getView(), "未正确配置生活费");
+                        }
+                    } else showSnackbar(getView(), "未正确配置生活费");
+                }
+
+                if (sharedPreferences.getBoolean("calc_money", false)) {
+                    if (!sharedPreferences.getString("month_money", "0").equals("0")) {
+                        try {
+                            money_progress.setMax(Integer.parseInt(sharedPreferences.getString("month_money", "")) * 100);
+                            money_progress.setVisibility(View.VISIBLE);
+                            money_progress.setProgress((int) (total * 100), true);
+                        } catch (Exception e) {
+                            showSnackbar(getView(), "未正确配置生活费");
+                            return;
+                        }
+                    } else {
+                        money_progress.setVisibility(View.GONE);
                         showSnackbar(getView(), "未正确配置生活费");
                         return;
                     }
-                } else {
-                    money_progress.setVisibility(View.GONE);
-                    showSnackbar(getView(), "未正确配置生活费");
-                    return;
-                }
 
-                if (sharedPreferences.getBoolean("progress_color", false)) {
-                    try {
-                        money_progress.setProgressTintList(ColorStateList.valueOf(Integer.parseInt(sharedPreferences.getString("month_money", "0")) * 100 - (int) (total * 100) <= Integer.parseInt(sharedPreferences.getString("color_limit", "0")) * 100 ? ContextCompat.getColor(getContext(), R.color.yellow) : ContextCompat.getColor(getContext(), R.color.blue)));
-                    } catch (Exception e) {
-                        showSnackbar(getView(), "未正确设置多彩进度条");
+                    if (sharedPreferences.getBoolean("progress_color", false)) {
+                        try {
+                            money_progress.setProgressTintList(ColorStateList.valueOf(Integer.parseInt(sharedPreferences.getString("month_money", "0")) * 100 - (int) (total * 100) <= Integer.parseInt(sharedPreferences.getString("color_limit", "0")) * 100 ? ContextCompat.getColor(getContext(), R.color.yellow) : ContextCompat.getColor(getContext(), R.color.blue)));
+                        } catch (Exception e) {
+                            showSnackbar(getView(), "未正确设置多彩进度条");
+                        }
+                    } else {
+                        showSnackbar(getView(), "未设置多彩进度条");
                     }
                 } else {
-                    showSnackbar(getView(), "未设置多彩进度条");
+                    money_progress.setVisibility(View.GONE);
                 }
-            } else {
-                money_progress.setVisibility(View.GONE);
             }
-        }, 1000); // 延时设置progressbar以等待total计算
+        }, 200); // 延时设置progressbar以等待total计算
 
         return root;
     }

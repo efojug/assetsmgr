@@ -17,7 +17,7 @@ android {
         minSdk = 30
         targetSdk = 31
         versionCode = generateVersionCode()
-        versionName = "2.8.1"
+        versionName = "2.9.2"
     }
 
     buildTypes {
@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.lottie.compose)
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
