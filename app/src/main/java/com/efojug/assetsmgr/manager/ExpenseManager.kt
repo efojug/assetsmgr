@@ -19,8 +19,8 @@ data class Expense(
     val date: Long = System.currentTimeMillis()
 ) {
     enum class Type(val chinese: String) {
-        SchoolSupplies("学习用品"),
-        Food("伙食"),
+        SchoolSupplies("学习"),
+        Food("生活"),
         Other("其他");
 
         companion object {
