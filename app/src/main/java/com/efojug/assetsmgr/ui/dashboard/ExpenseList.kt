@@ -47,7 +47,7 @@ fun Test() {
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .padding(2.dp),
+                            .padding(6.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(Modifier.weight(1f)) {
