@@ -1,7 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Assetsmgr" parent="Theme.Material3.DayNight.NoActionBar">
-<!--        <item name="android:height">20dp</item>-->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

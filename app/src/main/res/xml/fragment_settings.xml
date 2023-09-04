@@ -32,7 +32,7 @@
             android:summary="点击以设置每个月的生活费"
             android:title="设置每个月的生活费" />
 
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             android:defaultValue="false"
             android:dependency="calc_money"
             android:key="auto_add_last_month"
