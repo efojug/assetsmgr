@@ -136,7 +136,7 @@ public class DashboardFragment extends Fragment {
                     money_progress.setVisibility(View.GONE);
                 }
             }
-        }, 200); // 延时设置progressbar以等待total计算
+        }, 100); // 延时设置progressbar以等待total计算
 
         return root;
     }
