@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/total_text_view"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:padding="8dp"
         android:text="加载中..."
         android:textSize="18sp" />
 
     <ProgressBar
         android:id="@+id/money_progress"
-        android:visibility="gone"
+        style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="12dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:indeterminate="false" />
+        android:indeterminate="false"
+        android:visibility="gone" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
@@ -33,17 +33,17 @@
         android:id="@+id/show_exp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:layout_margin="6dp"
-        android:text="支出记录"
         android:layout_gravity="center"
+        android:layout_margin="6dp"
+        android:padding="6dp"
+        android:text="支出记录"
         android:textSize="16sp" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/expense_list"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
 
 </LinearLayout>
