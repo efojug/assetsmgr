@@ -3,6 +3,7 @@ package com.efojug.assetsmgr.ui.dashboard;
 import static com.efojug.assetsmgr.util.Utils.showSnackbar;
 
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.compose.ui.platform.ComposeView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -49,7 +51,6 @@ public class DashboardFragment extends Fragment {
         ProgressBar money_progress = root.findViewById(R.id.money_progress);
         PieChart pieChart = root.findViewById(R.id.pie_chart);
         TextView totalTextView = root.findViewById(R.id.total_text_view);
-        ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "暂无支出记录" : "支出记录");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).getAllExpensesBlock(assets -> {
@@ -101,8 +102,9 @@ public class DashboardFragment extends Fragment {
         });
         ComposeView composeView = root.findViewById(R.id.expense_list);
         ExpenseListKt.bindView(this, composeView);
-        if (sharedPreferences.getBoolean("calc_money", false)) {
-            new Handler().postDelayed(() -> {
+        new Handler().postDelayed(() -> {
+            ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "暂无支出记录" : "支出记录");
+            if (sharedPreferences.getBoolean("calc_money", false)) {
                 if (!sharedPreferences.getString("month_money", "0").equals("0")) {
                     try {
                         money_progress.setMax(Integer.parseInt(sharedPreferences.getString("month_money", "")) * 100);
@@ -110,16 +112,27 @@ public class DashboardFragment extends Fragment {
                         money_progress.setProgress((int) (total * 100), true);
                     } catch (Exception e) {
                         showSnackbar(getView(), "未正确配置生活费");
+                        return;
                     }
                 } else {
                     money_progress.setVisibility(View.GONE);
                     showSnackbar(getView(), "未正确配置生活费");
+                    return;
                 }
-                money_progress.setVisibility(total == 0 ? View.GONE : View.VISIBLE);
-            }, 50); // 延时获取
-        } else {
-            money_progress.setVisibility(View.GONE);
-        }
+
+                if (sharedPreferences.getBoolean("progress_color", false)) {
+                    try {
+                        money_progress.setProgressTintList(ColorStateList.valueOf(Integer.parseInt(sharedPreferences.getString("month_money", "0")) * 100 - (int) (total * 100) <= Integer.parseInt(sharedPreferences.getString("color_limit", "0")) * 100 ? ContextCompat.getColor(getContext(), R.color.yellow) : ContextCompat.getColor(getContext(), R.color.blue)));
+                    } catch (Exception e) {
+                        showSnackbar(getView(), "未正确设置多彩进度条");
+                    }
+                } else {
+                    showSnackbar(getView(), "未设置多彩进度条");
+                }
+            } else {
+                money_progress.setVisibility(View.GONE);
+            }
+        }, 50); // 延时设置progressbar以等待total计算
 
         return root;
     }

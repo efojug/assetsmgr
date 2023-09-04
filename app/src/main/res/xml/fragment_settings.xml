@@ -32,12 +32,26 @@
             android:summary="点击以设置每个月的生活费(仅支持整数)"
             android:title="设置每个月的生活费" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:dependency="calc_money"
             android:key="auto_add_last_month"
             android:summary="自动将上个月剩余的生活费添加到这个月"
             android:title="结转剩余生活费" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:dependency="calc_money"
+            android:key="progress_color"
+            android:summary="当花费达到设置额度时进度条将变色"
+            android:title="多彩进度条" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="progress_color"
+            android:key="color_limit"
+            android:summary="点击以设置生活费剩余多少时变色"
+            android:title="设置变色阈值" />
 
         <MultiSelectListPreference
             android:entries="@array/expense_type_list"

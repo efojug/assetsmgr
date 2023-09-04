@@ -23,15 +23,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         SwitchPreferenceCompat autoDarkModeSwitch =
                 findPreference("auto_dark_mode");
 
+        darkModeSwitch.setEnabled(autoDarkModeSwitch.isChecked() ? false : true);
+
         darkModeSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
-            if ((boolean) newValue) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            if ((boolean) newValue)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             return true;
         });
 
         autoDarkModeSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
-            if ((boolean) newValue) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            else AppCompatDelegate.setDefaultNightMode(darkModeSwitch.isChecked() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+            if ((boolean) newValue)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            else
+                AppCompatDelegate.setDefaultNightMode(darkModeSwitch.isChecked() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
             // 当自动切换深色模式开关被启用时，禁用深色模式开关
             darkModeSwitch.setEnabled(!(boolean) newValue);
             return true;
