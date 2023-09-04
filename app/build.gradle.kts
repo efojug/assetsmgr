@@ -17,7 +17,7 @@ android {
         minSdk = 30
         targetSdk = 31
         versionCode = generateVersionCode()
-        versionName = "2.9.2"
+        versionName = "3.0"
     }
 
     buildTypes {

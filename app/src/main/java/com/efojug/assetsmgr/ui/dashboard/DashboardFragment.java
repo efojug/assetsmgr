@@ -3,7 +3,6 @@ package com.efojug.assetsmgr.ui.dashboard;
 import static com.efojug.assetsmgr.util.Utils.showSnackbar;
 
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;

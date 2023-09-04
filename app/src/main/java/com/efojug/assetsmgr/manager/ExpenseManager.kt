@@ -74,6 +74,15 @@ class ExpenseManager(
         }
     }
 
+    fun removeAllExpense() {
+        ioScope.launch {
+            dataStore.edit { preferences ->
+                preferences[ASSETS_SET_KEY] = emptySet() // 将所有费用从 set 移除
+                preferences[TOTAL_AMOUNT_KEY] = 0f // 将总金额设置为 0
+            }
+        }
+    }
+
     suspend fun getAllExpense(): List<Expense> {
         val jsonList = dataStore.data.first()[ASSETS_SET_KEY] ?: setOf()
         return jsonList.map {
