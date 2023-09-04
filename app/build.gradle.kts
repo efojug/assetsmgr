@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.efojug.assetsmgr"
         minSdk = 30
-        targetSdk = 32
+        targetSdk = 31
         versionCode = generateVersionCode()
         versionName = "2.8.1"
     }

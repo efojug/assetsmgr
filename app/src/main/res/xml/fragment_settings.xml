@@ -29,7 +29,7 @@
             android:defaultValue="0"
             android:dependency="calc_money"
             android:key="month_money"
-            android:summary="点击以设置每个月的生活费(仅支持整数)"
+            android:summary="点击以设置每个月的生活费"
             android:title="设置每个月的生活费" />
 
         <SwitchPreferenceCompat

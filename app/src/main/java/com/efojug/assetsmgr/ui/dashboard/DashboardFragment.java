@@ -104,7 +104,7 @@ public class DashboardFragment extends Fragment {
         ExpenseListKt.bindView(this, composeView);
         new Handler().postDelayed(() -> {
             ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "暂无支出记录" : "支出记录");
-            if (sharedPreferences.getBoolean("calc_money", false)) {
+            if (sharedPreferences.getBoolean("calc_money", false) && total != 0) {
                 if (!sharedPreferences.getString("month_money", "0").equals("0")) {
                     try {
                         money_progress.setMax(Integer.parseInt(sharedPreferences.getString("month_money", "")) * 100);
