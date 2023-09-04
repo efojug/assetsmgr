@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +28,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import org.koin.java.KoinJavaComponent;
 
@@ -48,7 +48,7 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        ProgressBar money_progress = root.findViewById(R.id.money_progress);
+        LinearProgressIndicator money_progress = root.findViewById(R.id.money_progress);
         PieChart pieChart = root.findViewById(R.id.pie_chart);
         TextView totalTextView = root.findViewById(R.id.total_text_view);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -75,7 +75,6 @@ public class DashboardFragment extends Fragment {
                 }
             }
 
-            // 设置饼图样式
             PieDataSet pieDataSet = new PieDataSet(entries, "资源比例");
             pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
             PieData pieData = new PieData(pieDataSet);
@@ -112,6 +111,7 @@ public class DashboardFragment extends Fragment {
                         try {
                             money_progress.setMax(Integer.parseInt(sharedPreferences.getString("month_money", "")) * 100);
                             money_progress.setVisibility(View.VISIBLE);
+                            money_progress.setProgress(0);
                             money_progress.setProgress((int) (total * 100), true);
                         } catch (Exception e) {
                             showSnackbar(getView(), "未正确配置生活费");
@@ -125,12 +125,10 @@ public class DashboardFragment extends Fragment {
 
                     if (sharedPreferences.getBoolean("progress_color", false)) {
                         try {
-                            money_progress.setProgressTintList(ColorStateList.valueOf(Integer.parseInt(sharedPreferences.getString("month_money", "0")) * 100 - (int) (total * 100) <= Integer.parseInt(sharedPreferences.getString("color_limit", "0")) * 100 ? ContextCompat.getColor(getContext(), R.color.yellow) : ContextCompat.getColor(getContext(), R.color.blue)));
+                            money_progress.setIndicatorColor(Integer.parseInt(sharedPreferences.getString("month_money", "0")) * 100 - (int) (total * 100) <= Integer.parseInt(sharedPreferences.getString("color_limit", "0")) * 100 ? ContextCompat.getColor(getContext(), R.color.yellow) : ContextCompat.getColor(getContext(), R.color.blue));
                         } catch (Exception e) {
                             showSnackbar(getView(), "未正确设置多彩进度条");
                         }
-                    } else {
-                        showSnackbar(getView(), "未设置多彩进度条");
                     }
                 } else {
                     money_progress.setVisibility(View.GONE);
