@@ -77,6 +77,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("androidx.compose.material:material-android:1.5.0")
 
     implementation("dev.rikka.rikkax.material:material:2.7.0")
     implementation("dev.rikka.rikkax.material:material-preference:2.0.0")

@@ -42,8 +42,7 @@ import java.util.Date
 
 @Composable
 fun LottieWidget(
-    spec: LottieCompositionSpec,
-    text: String
+    spec: LottieCompositionSpec, text: String
 ) {
     Box(
         modifier = Modifier
@@ -61,15 +60,11 @@ fun LottieWidget(
                 composition = composition,
                 iterations = LottieConstants.IterateForever,
             )
-            LottieAnimation(
-                modifier = Modifier
-                    .size(200.dp),
+            LottieAnimation(modifier = Modifier.size(200.dp),
                 composition = composition,
-                progress = { progress }
-            )
+                progress = { progress })
             Text(
-                text = text,
-                style = MaterialTheme.typography.titleLarge
+                text = text, style = MaterialTheme.typography.titleLarge
             )
         }
     }
@@ -93,8 +88,7 @@ fun Test() {
         when {
             expenseList.isEmpty() -> {
                 LottieWidget(
-                    spec = LottieCompositionSpec.RawRes(R.raw.empty),
-                    text = "空空如也"
+                    spec = LottieCompositionSpec.RawRes(R.raw.empty), text = "空空如也"
                 )
             }
 
@@ -117,8 +111,7 @@ fun Test() {
                                     Text(text = dataFormatter.format(Date(it.date)))
                                 }
                                 Text(
-                                    text = it.amount.toString() + "元",
-                                    fontWeight = FontWeight.Bold
+                                    text = it.amount.toString() + "元", fontWeight = FontWeight.Bold
                                 )
                             }
                         }
