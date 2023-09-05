@@ -14,9 +14,8 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 /* TODO List
     Dashboard 右上角调整月份，以月份显示图表 -> efojug
     Dashboard ExpenseList 左滑修改和删除 -> DeSu, efojug
-    Dashboard ProgressBar 和 顶部Text 添加上月结转 -> efojug
+    Dashboard ProgressBar 和 顶部 TextView 添加上月结转 -> efojug
     Settings 结转 -> efojug, DeSu
-    Main 月初提醒获取生活费 -> efojug
     Main 数据导出
  */
 
