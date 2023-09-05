@@ -95,6 +95,7 @@ public class DashboardFragment extends Fragment {
             ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "" : "支出记录");
 
             if ((int) total != 0) {
+                pieChart.setVisibility(View.VISIBLE);
                 if (sharedPreferences.getBoolean("calc_money", false)) {
                     if (!sharedPreferences.getString("month_money", "0").equals("0")) {
                         try {

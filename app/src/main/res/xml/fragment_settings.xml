@@ -62,7 +62,6 @@
 
         <Preference
             android:key="clear_data"
-            android:layout="@layout/clear_data_layout"
             android:summary="点击将会清除所有生活费记录(此操作不可恢复)"
             android:title="清除所有记录" />
 

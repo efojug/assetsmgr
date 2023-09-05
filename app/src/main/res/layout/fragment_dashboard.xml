@@ -26,7 +26,8 @@
         android:id="@+id/pie_chart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/show_exp"
