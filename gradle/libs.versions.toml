@@ -7,7 +7,7 @@ compose-bom = "2023.08.00"
 [libraries]
 # Lottie for Android Compose
 # http://airbnb.io/lottie/#/android-compose
-lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version = "6.0.0" }
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version = "6.1.0" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
