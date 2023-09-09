@@ -32,7 +32,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Preference clearData = findPreference("clear_data");
 
-        darkModeSwitch.setEnabled(autoDarkModeSwitch.isChecked() ? false : true);
+        darkModeSwitch.setEnabled(!autoDarkModeSwitch.isChecked());
 
         darkModeSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
             if ((boolean) newValue)
