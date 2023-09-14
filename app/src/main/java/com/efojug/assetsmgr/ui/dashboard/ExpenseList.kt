@@ -1,5 +1,6 @@
 package com.efojug.assetsmgr.ui.dashboard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -96,6 +97,12 @@ fun Test() {
                 LazyColumn {
                     items(expenseList.reversed()) {
                         Card(Modifier.padding(4.dp)) {
+                            Modifier
+                                .clickable {
+//                                    removeExpenses(dataFormatter.format(Date(it.date)))
+                                    return@clickable
+                                }
+                                .testTag(dataFormatter.format(Date(it.date)))
                             Row(
                                 Modifier
                                     .fillMaxWidth()
@@ -111,7 +118,8 @@ fun Test() {
                                     Text(text = dataFormatter.format(Date(it.date)))
                                 }
                                 Text(
-                                    text = it.amount.toString() + "元", fontWeight = FontWeight.Bold
+                                    //need more code
+                                    text = "-" + it.amount.toString() + "元", fontWeight = FontWeight.Bold
                                 )
                             }
                         }
