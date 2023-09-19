@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
                 String remark = expenseNameEditText.getText().toString();
                 ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class))
                         .addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
-                showSnackbar(getView(), "添加" + currentSelectedType.getChinese() + amount + "元");
+                showSnackbar(getView(), "支出" + currentSelectedType.getChinese() + amount + "元");
                 expenseNameEditText.setText("");
                 expenseAmountEditText.setText("");
             } catch (Exception e) {

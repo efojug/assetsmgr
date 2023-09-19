@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -70,14 +71,14 @@
 
     <!-- 支出金额输入框 -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/amount_input_layout"
+        android:id="@+id/expense_amount_input_layout"
         android:layout_width="0dp"
         android:layout_height="62dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="0dp"
         android:hint="支出金额"
         app:counterEnabled="true"
-        app:counterMaxLength="8"
+        app:counterMaxLength="6"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toStartOf="@+id/add_expense_button"
         app:layout_constraintHorizontal_bias="0.5"
@@ -107,7 +108,66 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/amount_input_layout"
+        app:layout_constraintStart_toEndOf="@+id/expense_amount_input_layout"
         app:layout_constraintTop_toBottomOf="@+id/expense_name_edittext" />
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/incomes_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="235dp"
+        android:text="添加收入"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- 收入金额输入框 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/income_amount_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:hint="支出金额"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toStartOf="@+id/add_income_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/incomes_textview">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/income_amount_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 添加收入按钮 -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/add_income_button"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:text="添加"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/income_amount_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/incomes_textview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
