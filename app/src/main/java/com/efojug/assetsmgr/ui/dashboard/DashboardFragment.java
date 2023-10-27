@@ -90,9 +90,9 @@ public class DashboardFragment extends Fragment {
             return Unit.INSTANCE;
         });
         ComposeView composeView = root.findViewById(R.id.expense_list);
-        ExpenseListKt.bindView(this, composeView);
+        ExpenseListKt.bindView(composeView);
         new Handler().postDelayed(() -> {
-            ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "" : "支出记录");
+            ((TextView) root.findViewById(R.id.show_exp)).setText(total == 0 ? "" : "收支记录");
 
             if ((int) total != 0) {
                 pieChart.setVisibility(View.VISIBLE);
@@ -134,7 +134,7 @@ public class DashboardFragment extends Fragment {
                     money_progress.setVisibility(View.GONE);
                 }
             }
-        }, 100); // 延时设置progressbar以等待total计算
+        }, 100); // 延时设置progressbar等待total计算
 
         return root;
     }

@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -101,7 +100,7 @@ fun Test() {
                         Card(Modifier.padding(4.dp)) {
                             Modifier
                                 .clickable {
-                                    removeExpenses(dataFormatter.format(Date(it.date)))
+//                                    removeExpenses(dataFormatter.format(Date(it.date)))
                                     return@clickable
                                 }
                                 .testTag(dataFormatter.format(Date(it.date)))
@@ -132,7 +131,7 @@ fun Test() {
     }
 }
 
-fun DashboardFragment.bindView(composeView: ComposeView) {
+fun bindView(composeView: ComposeView) {
     composeView.setContent {
         AssetsManagerTheme {
             Test()

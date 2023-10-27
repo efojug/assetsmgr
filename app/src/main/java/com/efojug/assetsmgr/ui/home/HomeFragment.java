@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private TextInputEditText expenseAmountEditText;
+    private TextInputEditText incomeAmountEditText;
     private EditText expenseNameEditText;
     private Spinner expenseTypeSpinner;
     private List<String> mExpenseType;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         //初始化页面
         expenseAmountEditText = root.findViewById(R.id.expense_amount_edittext);
+        incomeAmountEditText = root.findViewById(R.id.income_amount_edittext);
         expenseTypeSpinner = root.findViewById(R.id.expense_type_spinner);
         //创建列表
         mExpenseType = new ArrayList<>();
@@ -71,7 +73,7 @@ public class HomeFragment extends Fragment {
                 //什么也不做，正常用户理论上不会触发这个方法
             }
         });
-        //添加onClickListener
+        //添加onClickListener 支出部分
         root.findViewById(R.id.add_expense_button).setOnClickListener(v -> {
             // Get the title and content from the EditText views
             String expenseAmount = expenseAmountEditText.getText().toString();
@@ -80,8 +82,7 @@ public class HomeFragment extends Fragment {
                 float amount = Float.parseFloat(expenseAmount);
                 if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
                 String remark = expenseNameEditText.getText().toString();
-                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class))
-                        .addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
+                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
                 showSnackbar(getView(), "支出" + currentSelectedType.getChinese() + amount + "元");
                 expenseNameEditText.setText("");
                 expenseAmountEditText.setText("");
@@ -89,6 +90,21 @@ public class HomeFragment extends Fragment {
                 showSnackbar(getView(), "请输入正确金额");
             }
         });
+
+        //添加点击监听器 收入部分
+        root.findViewById(R.id.add_income_button).setOnClickListener(view -> {
+            String incomeAmount = incomeAmountEditText.getText().toString();
+            try {
+                float amount = Float.parseFloat(incomeAmount);
+                if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
+                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, currentSelectedType, "收入", System.currentTimeMillis()));
+                showSnackbar(getView(), "收入" + currentSelectedType.getChinese() + amount + "元");
+                incomeAmountEditText.setText("");
+            } catch (Exception e) {
+                showSnackbar(getView(), "请输入正确金额");
+            }
+        });
+
         return root;
     }
 
