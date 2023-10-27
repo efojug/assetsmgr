@@ -19,6 +19,7 @@ data class Expense(
     val date: Long = System.currentTimeMillis()
 ) {
     enum class Type(val chinese: String) {
+        Income("收入"),
         Study("学习用品"),
         Life("生活用品"),
         Other("其他");

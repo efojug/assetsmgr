@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
             try {
                 float amount = Float.parseFloat(incomeAmount);
                 if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
-                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, currentSelectedType, "收入", System.currentTimeMillis()));
+                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, Expense.Type.Income, "", System.currentTimeMillis()));
                 showSnackbar(getView(), "收入" + currentSelectedType.getChinese() + amount + "元");
                 incomeAmountEditText.setText("");
             } catch (Exception e) {

@@ -120,7 +120,7 @@ fun Test() {
                                 }
                                 Text(
                                     //need more code
-                                    text = "-" + it.amount.toString() + "元", fontWeight = FontWeight.Bold
+                                    text = (if (it.type == Expense.Type.Income) "+" else "-") + it.amount.toString() + "元", fontWeight = FontWeight.Bold
                                 )
                             }
                         }
