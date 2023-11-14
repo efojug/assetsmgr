@@ -12,7 +12,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
-    Home 加钱
     Dashboard 右上角调整月份，以月份显示图表 -> efojug
     Dashboard ExpenseList 点击删除(..修改) -> DeSu, efojug
     Dashboard ProgressBar 和 顶部 TextView 添加上月结转 -> efojug

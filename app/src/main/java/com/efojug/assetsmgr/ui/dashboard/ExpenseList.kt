@@ -62,7 +62,8 @@ fun LottieWidget(
                 composition = composition,
                 iterations = LottieConstants.IterateForever,
             )
-            LottieAnimation(modifier = Modifier.size(200.dp),
+            LottieAnimation(
+                modifier = Modifier.size(200.dp),
                 composition = composition,
                 progress = { progress })
             Text(
@@ -100,6 +101,7 @@ fun Test() {
                         Card(Modifier.padding(4.dp)) {
                             Modifier
                                 .clickable {
+                                    //todo
 //                                    removeExpenses(dataFormatter.format(Date(it.date)))
                                     return@clickable
                                 }
@@ -119,8 +121,9 @@ fun Test() {
                                     Text(text = dataFormatter.format(Date(it.date)))
                                 }
                                 Text(
-                                    //need more code
-                                    text = (if (it.type == Expense.Type.Income) "+" else "-") + it.amount.toString() + "元", fontWeight = FontWeight.Bold
+                                    //todo
+                                    text = (if (it.type == Expense.Type.Income) "+" else "-") + it.amount.toString() + "元",
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }

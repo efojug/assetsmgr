@@ -42,8 +42,7 @@ public class DashboardFragment extends Fragment {
     private FragmentDashboardBinding binding;
     private float total = 0f;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -64,10 +63,7 @@ public class DashboardFragment extends Fragment {
             for (Expense.Type type : Expense.Type.values()) {
                 AtomicReference<Float> floatReference = new AtomicReference<>(0f);
 
-                assets
-                        .stream()
-                        .filter(expense -> expense.getType() == type)
-                        .forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
+                assets.stream().filter(expense -> expense.getType() == type).forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
 
                 if (floatReference.get() > 0f) {
                     entries.add(new PieEntry((floatReference.get() / total) * 100, type.getChinese()));
@@ -86,7 +82,6 @@ public class DashboardFragment extends Fragment {
             pieChart.setUsePercentValues(true);
             pieChart.invalidate();
             pieChart.setDrawHoleEnabled(false);
-
             return Unit.INSTANCE;
         });
         ComposeView composeView = root.findViewById(R.id.expense_list);
