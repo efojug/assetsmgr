@@ -89,7 +89,7 @@ fun Test() {
         SimpleDateFormat("MM月dd日HH时mm分")
     }
 
-    LaunchedEffect(null) {
+    LaunchedEffect(Unit) {
         expenseList.addAll(GlobalContext.get().get<ExpenseManager>().getAllExpense())
     }
 
@@ -100,7 +100,6 @@ fun Test() {
                     spec = LottieCompositionSpec.RawRes(R.raw.empty), text = "空空如也"
                 )
             }
-
             else -> {
                 LazyColumn {
                     items(expenseList.reversed()) {
