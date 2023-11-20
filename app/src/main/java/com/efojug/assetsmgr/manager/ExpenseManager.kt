@@ -29,9 +29,8 @@ data class Expense(
     }
 }
 
-class ExpenseManager(
-    private val dataStore: DataStore<Preferences>
-) {
+class ExpenseManager(private val dataStore: DataStore<Preferences>) {
+
     private val TOTAL_AMOUNT_KEY = floatPreferencesKey("total_amount")
     private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
     private val gson = Gson()

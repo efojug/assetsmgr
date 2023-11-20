@@ -1,5 +1,6 @@
 package com.efojug.assetsmgr.ui.dashboard
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,16 +29,21 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.dataStore
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.efojug.assetsmgr.Application
 import com.efojug.assetsmgr.R
 import com.efojug.assetsmgr.manager.Expense
 import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.ui.theme.AssetsManagerTheme
+import com.efojug.assetsmgr.util.extension.dataStore
 import org.koin.core.context.GlobalContext
+import org.koin.dsl.koinApplication
+import org.koin.java.KoinJavaComponent.get
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -98,14 +104,12 @@ fun Test() {
             else -> {
                 LazyColumn {
                     items(expenseList.reversed()) {
-                        Card(Modifier.padding(4.dp)) {
+                        Card(
                             Modifier
+                                .padding(4.dp)
                                 .clickable {
-                                    //todo
-//                                    removeExpenses(dataFormatter.format(Date(it.date)))
-                                    return@clickable
-                                }
-                                .testTag(dataFormatter.format(Date(it.date)))
+                                    ExpenseManager(Application().dataStore).removeExpenses(it.date)
+                                }) {
                             Row(
                                 Modifier
                                     .fillMaxWidth()
