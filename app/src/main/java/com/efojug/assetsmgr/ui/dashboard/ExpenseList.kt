@@ -1,6 +1,5 @@
 package com.efojug.assetsmgr.ui.dashboard
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,33 +17,26 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.dataStore
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.efojug.assetsmgr.Application
 import com.efojug.assetsmgr.R
 import com.efojug.assetsmgr.manager.Expense
 import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.ui.theme.AssetsManagerTheme
-import com.efojug.assetsmgr.util.extension.dataStore
 import org.koin.core.context.GlobalContext
-import org.koin.dsl.koinApplication
-import org.koin.java.KoinJavaComponent.get
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -84,7 +76,8 @@ fun LottieWidget(
 fun Test() {
     val expenseManager = GlobalContext.get().get<ExpenseManager>()
 
-    val expenseList by expenseManager.getAllExpenseFlow().collectAsState(initial = mutableStateListOf())
+    val expenseList by expenseManager.getAllExpenseFlow()
+        .collectAsState(initial = SnapshotStateList())
 
     val dataFormatter = remember {
         SimpleDateFormat("MM月dd日HH时mm分")
