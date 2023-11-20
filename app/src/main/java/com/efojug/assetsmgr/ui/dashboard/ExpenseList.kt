@@ -36,6 +36,7 @@ import com.efojug.assetsmgr.R
 import com.efojug.assetsmgr.manager.Expense
 import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.ui.theme.AssetsManagerTheme
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.GlobalContext
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -77,7 +78,7 @@ fun Test() {
     val expenseManager = GlobalContext.get().get<ExpenseManager>()
 
     val expenseList by expenseManager.getAllExpenseFlow()
-        .collectAsState(initial = SnapshotStateList())
+        .collectAsState(initial = SnapshotStateList(), context = Dispatchers.IO)
 
     val dataFormatter = remember {
         SimpleDateFormat("MM月dd日HH时mm分")
