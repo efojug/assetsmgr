@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -81,16 +82,12 @@ fun LottieWidget(
 
 @Composable
 fun Test() {
-    val expenseList = remember {
-        mutableStateListOf<Expense>()
-    }
+    val expenseManager = GlobalContext.get().get<ExpenseManager>()
+
+    val expenseList by expenseManager.getAllExpenseFlow().collectAsState(initial = mutableStateListOf())
 
     val dataFormatter = remember {
         SimpleDateFormat("MM月dd日HH时mm分")
-    }
-
-    LaunchedEffect(null) {
-        expenseList.addAll(GlobalContext.get().get<ExpenseManager>().getAllExpense())
     }
 
     Column(Modifier.fillMaxSize()) {
@@ -108,7 +105,7 @@ fun Test() {
                             Modifier
                                 .padding(4.dp)
                                 .clickable {
-                                    ExpenseManager(Application().dataStore).removeExpenses(it.date)
+                                    expenseManager.removeExpenses(it.date)
                                 }) {
                             Row(
                                 Modifier

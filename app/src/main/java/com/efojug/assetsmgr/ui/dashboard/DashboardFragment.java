@@ -19,8 +19,8 @@ import androidx.preference.PreferenceManager;
 
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
-import com.efojug.assetsmgr.manager.ExpenseManager;
 import com.efojug.assetsmgr.manager.Expense;
+import com.efojug.assetsmgr.util.ExpenseManagerJavaBridge;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -28,8 +28,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-
-import org.koin.java.KoinJavaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,7 @@ public class DashboardFragment extends Fragment {
         TextView totalTextView = root.findViewById(R.id.total_text_view);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).getAllExpensesBlock(assets -> {
+        ExpenseManagerJavaBridge.getAllExpensesAsync(assets -> {
             for (Expense expense : assets) {
                 total += expense.getAmount();
             }

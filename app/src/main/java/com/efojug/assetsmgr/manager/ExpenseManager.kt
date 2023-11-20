@@ -1,14 +1,17 @@
 package com.efojug.assetsmgr.manager
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.util.ioScope
-import com.efojug.assetsmgr.util.runInUiThread
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 data class Expense(
@@ -85,12 +88,12 @@ class ExpenseManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    fun getAllExpensesBlock(callback: (List<Expense>) -> Unit) = ioScope.launch {
-        dataStore.data.collect { it ->
-            val jsonSet = it[ASSETS_SET_KEY] ?: setOf()
-            runInUiThread {
-                callback(jsonSet.map { gson.fromJson(it, Expense::class.java) })
+    fun getAllExpenseFlow(): Flow<SnapshotStateList<Expense>> {
+        return dataStore.data.map {
+            val expenses = (it[ASSETS_SET_KEY] ?: setOf()).map {
+                gson.fromJson(it, Expense::class.java)
             }
+            mutableStateListOf(*expenses.toTypedArray())
         }
     }
 }
