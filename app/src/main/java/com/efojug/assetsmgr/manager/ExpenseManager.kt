@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import com.efojug.assetsmgr.MainActivity
+import com.efojug.assetsmgr.ui.dashboard.DashboardFragment
 import com.efojug.assetsmgr.util.ioScope
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -32,8 +34,9 @@ data class Expense(
     }
 }
 
-class ExpenseManager(private val dataStore: DataStore<Preferences>) {
-
+class ExpenseManager(
+    private val dataStore: DataStore<Preferences>
+) {
     private val TOTAL_AMOUNT_KEY = floatPreferencesKey("total_amount")
     private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
     private val gson = Gson()
@@ -70,6 +73,7 @@ class ExpenseManager(private val dataStore: DataStore<Preferences>) {
                 }
             }
         }
+        MainActivity().refreshFragment(DashboardFragment())
     }
 
     fun removeAllExpense() {

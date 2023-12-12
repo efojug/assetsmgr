@@ -1,10 +1,13 @@
 package com.efojug.assetsmgr;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -13,10 +16,9 @@ import com.efojug.assetsmgr.databinding.ActivityMainBinding;
 
 /* TODO List
     Dashboard 右上角调整月份，以月份显示图表 -> efojug
-    Dashboard ExpenseList 点击删除(..修改) -> DeSu, efojug
     Dashboard ProgressBar 和 顶部 TextView 添加上月结转 -> efojug
     Settings 结转 -> efojug, DeSu
-    Main 数据导出
+    Application 数据导出
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -41,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(isAutoDarkModeEnabled ?
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM :
                 (isDarkModeEnabled ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
+    }
+    public void refreshFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment_activity_main, fragment);
+        transaction.commit();
     }
 }

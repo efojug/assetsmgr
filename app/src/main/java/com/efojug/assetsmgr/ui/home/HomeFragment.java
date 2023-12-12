@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
         mExpenseType = new ArrayList<>();
         for (Expense.Type type : Expense.Type.values()) {
             mExpenseType.add(type.getChinese());
+            mExpenseType.remove("收入");
         }
         //创建适配器
         mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mExpenseType);
