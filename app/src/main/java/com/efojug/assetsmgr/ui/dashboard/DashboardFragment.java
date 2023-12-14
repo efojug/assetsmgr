@@ -20,7 +20,9 @@ import androidx.preference.PreferenceManager;
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentDashboardBinding;
 import com.efojug.assetsmgr.manager.Expense;
+import com.efojug.assetsmgr.manager.ExpenseManager;
 import com.efojug.assetsmgr.util.ExpenseManagerJavaBridge;
+import com.efojug.assetsmgr.util.FlowReceiver;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -29,58 +31,82 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
+import org.koin.java.KoinJavaComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
+import kotlinx.coroutines.Dispatchers;
 
 public class DashboardFragment extends Fragment {
-
     private FragmentDashboardBinding binding;
+
     private float total = 0f;
+
+    private ExpenseManager expenseManager = KoinJavaComponent.get(ExpenseManager.class);
+
+    private PieChart pieChart;
+
+    private TextView totalTextView;
+
+    private FlowReceiver<List<Expense>> flowReceiver = new FlowReceiver<>(expenseManager.getAllExpenseFlow(), Dispatchers.getMain(), (expenses -> {
+        updatePieChart(expenses);
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+        return Unit.INSTANCE;
+    }));
+
+    private void updatePieChart(List<Expense> list) {
+        total = 0f;
+        for (Expense expense : list) {
+            total += expense.getAmount();
+        }
+
+        totalTextView.setText((int) total == 0 ? "" : "支出" + total + "元");
+
+        List<PieEntry> entries = new ArrayList<>();
+
+        for (Expense.Type type : Expense.Type.values()) {
+            AtomicReference<Float> floatReference = new AtomicReference<>(0f);
+
+            list.stream().filter(expense -> expense.getType() == type).forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
+
+            if (floatReference.get() > 0f) {
+                entries.add(new PieEntry((floatReference.get() / total) * 100, type.getChinese()));
+            }
+        }
+
+        PieDataSet pieDataSet = new PieDataSet(entries, "资源比例");
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
+        pieData.setValueTextSize(12f);
+        pieData.setValueTextColor(Color.WHITE);
+
+        pieChart.setData(pieData);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         LinearProgressIndicator money_progress = root.findViewById(R.id.money_progress);
-        PieChart pieChart = root.findViewById(R.id.pie_chart);
-        TextView totalTextView = root.findViewById(R.id.total_text_view);
+        pieChart = root.findViewById(R.id.pie_chart);
+        totalTextView = root.findViewById(R.id.total_text_view);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//
+//        ExpenseManagerJavaBridge.INSTANCE.getAllExpensesAsync(assets -> {
+//            updatePieChart(assets);
+//            return Unit.INSTANCE;
+//        });
+//
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+        pieChart.setUsePercentValues(true);
+        pieChart.invalidate();
+        pieChart.setDrawHoleEnabled(false);
 
-        ExpenseManagerJavaBridge.INSTANCE.getAllExpensesAsync(assets -> {
-            for (Expense expense : assets) {
-                total += expense.getAmount();
-            }
-
-            totalTextView.setText((int) total == 0 ? "" : "支出" + total + "元");
-
-            List<PieEntry> entries = new ArrayList<>();
-
-            for (Expense.Type type : Expense.Type.values()) {
-                AtomicReference<Float> floatReference = new AtomicReference<>(0f);
-
-                assets.stream().filter(expense -> expense.getType() == type).forEach(t -> floatReference.updateAndGet(v -> v + t.getAmount()));
-
-                if (floatReference.get() > 0f) {
-                    entries.add(new PieEntry((floatReference.get() / total) * 100, type.getChinese()));
-                }
-            }
-
-            PieDataSet pieDataSet = new PieDataSet(entries, "资源比例");
-            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-            PieData pieData = new PieData(pieDataSet);
-            pieData.setValueFormatter(new PercentFormatter(pieChart));
-            pieData.setValueTextSize(12f);
-            pieData.setValueTextColor(Color.WHITE);
-            pieChart.setData(pieData);
-            pieChart.getDescription().setEnabled(false);
-            pieChart.getLegend().setEnabled(false);
-            pieChart.setUsePercentValues(true);
-            pieChart.invalidate();
-            pieChart.setDrawHoleEnabled(false);
-            return Unit.INSTANCE;
-        });
         ComposeView composeView = root.findViewById(R.id.expense_list);
         ExpenseListKt.bindView(composeView);
         new Handler().postDelayed(() -> {
@@ -134,5 +160,6 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        flowReceiver.stop();
     }
 }

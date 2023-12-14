@@ -1,7 +1,5 @@
 package com.efojug.assetsmgr.manager
 
-import com.efojug.assetsmgr.MainActivity
-import com.efojug.assetsmgr.ui.dashboard.DashboardFragment
 import com.efojug.assetsmgr.util.store.StoreHelper
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -51,8 +49,6 @@ class ExpenseManager(
                 expensePreferenceItem.remove(it)
             }
         }
-
-        MainActivity().refreshFragment(DashboardFragment())
     }
 
     suspend fun removeAllExpense() {
