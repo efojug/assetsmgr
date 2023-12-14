@@ -17,10 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.efojug.assetsmgr.R;
 import com.efojug.assetsmgr.databinding.FragmentHomeBinding;
 import com.efojug.assetsmgr.manager.Expense;
-import com.efojug.assetsmgr.manager.ExpenseManager;
+import com.efojug.assetsmgr.util.ExpenseManagerJavaBridge;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.koin.java.KoinJavaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +80,7 @@ public class HomeFragment extends Fragment {
                 float amount = Float.parseFloat(expenseAmount);
                 if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
                 String remark = expenseNameEditText.getText().toString();
-                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
+                ExpenseManagerJavaBridge.INSTANCE.addExpensesAsync(new Expense(amount, currentSelectedType, remark, System.currentTimeMillis()));
                 showSnackbar(getView(), "支出" + currentSelectedType.getChinese() + amount + "元");
                 expenseNameEditText.setText("");
                 expenseAmountEditText.setText("");
@@ -97,7 +95,7 @@ public class HomeFragment extends Fragment {
             try {
                 float amount = Float.parseFloat(incomeAmount);
                 if ((float) ((int) (amount * 100)) / 100f <= 0) throw new Exception();
-                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).addExpenses(new Expense(amount, Expense.Type.Income, "", System.currentTimeMillis()));
+                ExpenseManagerJavaBridge.INSTANCE.addExpensesAsync(new Expense(amount, Expense.Type.Income, "", System.currentTimeMillis()));
                 showSnackbar(getView(), "收入" + currentSelectedType.getChinese() + amount + "元");
                 incomeAmountEditText.setText("");
             } catch (Exception e) {

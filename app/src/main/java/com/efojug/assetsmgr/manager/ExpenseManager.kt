@@ -1,20 +1,11 @@
 package com.efojug.assetsmgr.manager
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.floatPreferencesKey
-import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.efojug.assetsmgr.MainActivity
 import com.efojug.assetsmgr.ui.dashboard.DashboardFragment
-import com.efojug.assetsmgr.util.ioScope
+import com.efojug.assetsmgr.util.store.StoreHelper
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.transform
 
 data class Expense(
     val amount: Float,
@@ -35,69 +26,52 @@ data class Expense(
 }
 
 class ExpenseManager(
-    private val dataStore: DataStore<Preferences>
+    storeHelper: StoreHelper
 ) {
-    private val TOTAL_AMOUNT_KEY = floatPreferencesKey("total_amount")
-    private val ASSETS_SET_KEY = stringSetPreferencesKey("assets")
+    private val expensePreferenceItem = storeHelper.stringSet("expenses")
     private val gson = Gson()
 
     suspend fun getTotalAmount(): Float {
-        return dataStore.data.first()[TOTAL_AMOUNT_KEY] ?: 0f
+        return expensePreferenceItem.get().sumOf {
+            val expense = gson.fromJson(it, Expense::class.java)
+            expense.amount.toDouble()
+        }.toFloat()
     }
 
-    fun addExpenses(expense: Expense) {
+    suspend fun addExpenses(expense: Expense) {
         val json = gson.toJson(expense)
-
-        ioScope.launch {
-            dataStore.edit {
-                it[ASSETS_SET_KEY] = (it[ASSETS_SET_KEY] ?: setOf()) + json
-                it[TOTAL_AMOUNT_KEY] = (it[TOTAL_AMOUNT_KEY] ?: 0f) + expense.amount
-            }
-        }
+        expensePreferenceItem.add(json)
     }
 
-    fun removeExpenses(date: Long) {
-        ioScope.launch {
-            dataStore.edit { preferences ->
-                preferences[ASSETS_SET_KEY]?.let {
-                    var totalAmount = preferences[TOTAL_AMOUNT_KEY] ?: 0f
-                    val newSet = it.filter {
-                        val expense = gson.fromJson(it, Expense::class.java)
-                        if (expense.date == date) {
-                            totalAmount -= expense.amount
-                        }
-                        expense.date != date
-                    }.toSet()
-                    preferences[ASSETS_SET_KEY] = newSet
-                    preferences[TOTAL_AMOUNT_KEY] = totalAmount.coerceAtLeast(0f)
-                }
+    suspend fun removeExpenses(date: Long) {
+        val set = expensePreferenceItem.get()
+        set.forEach {
+            val expense = convertFromString(it)
+            if (expense.date == date) {
+                expensePreferenceItem.remove(it)
             }
         }
+
         MainActivity().refreshFragment(DashboardFragment())
     }
 
-    fun removeAllExpense() {
-        ioScope.launch {
-            dataStore.edit { preferences ->
-                preferences[ASSETS_SET_KEY] = emptySet() // 将所有费用从 set 移除
-                preferences[TOTAL_AMOUNT_KEY] = 0f // 将总金额设置为 0
-            }
-        }
+    suspend fun removeAllExpense() {
+        expensePreferenceItem.reset()
     }
 
     suspend fun getAllExpense(): List<Expense> {
-        val jsonList = dataStore.data.first()[ASSETS_SET_KEY] ?: setOf()
-        return jsonList.map {
+        return expensePreferenceItem.get().map {
             gson.fromJson(it, Expense::class.java)
         }
     }
 
-    fun getAllExpenseFlow(): Flow<SnapshotStateList<Expense>> {
-        return dataStore.data.map {
-            val expenses = (it[ASSETS_SET_KEY] ?: setOf()).map {
-                gson.fromJson(it, Expense::class.java)
-            }
-            mutableStateListOf(*expenses.toTypedArray())
+    fun getAllExpenseFlow(): Flow<List<Expense>> {
+        return expensePreferenceItem.dataFlow.transform {
+            emit(it?.map { convertFromString(it) } ?: emptyList())
         }
+    }
+
+    private fun convertFromString(str: String): Expense {
+        return gson.fromJson(str, Expense::class.java)
     }
 }

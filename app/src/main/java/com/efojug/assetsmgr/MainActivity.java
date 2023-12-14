@@ -1,6 +1,5 @@
 package com.efojug.assetsmgr;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -44,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM :
                 (isDarkModeEnabled ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO));
     }
-    public void refreshFragment(Fragment fragment){
+
+    public void refreshFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment_activity_main, fragment);
         transaction.commit();

@@ -24,7 +24,6 @@ import androidx.compose.material.FixedThreshold
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
@@ -55,6 +54,7 @@ import com.efojug.assetsmgr.manager.Expense
 import com.efojug.assetsmgr.manager.ExpenseManager
 import com.efojug.assetsmgr.ui.theme.AssetsManagerTheme
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.GlobalContext
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -113,7 +113,9 @@ fun Test() {
                 LazyColumn {
                     items(expenseList.reversed(), key = { it.date }) {
                         ExpenseItem(expense = it, dataFormatter = dataFormatter) {
-                            expenseManager.removeExpenses(it.date)
+                            runBlocking {
+                                expenseManager.removeExpenses(it.date)
+                            }
                         }
                     }
                 }
@@ -144,7 +146,9 @@ private fun ExpenseItem(
             Icon(
                 imageVector = Icons.Outlined.Delete,
                 contentDescription = "delete expense",
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 16.dp)
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 16.dp)
             )
         }
 

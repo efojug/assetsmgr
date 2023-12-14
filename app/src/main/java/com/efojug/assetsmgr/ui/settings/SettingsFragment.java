@@ -2,8 +2,6 @@ package com.efojug.assetsmgr.ui.settings;
 
 import static com.efojug.assetsmgr.util.Utils.showSnackbar;
 
-import com.efojug.assetsmgr.manager.ExpenseManager;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,9 +12,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.efojug.assetsmgr.R;
+import com.efojug.assetsmgr.util.ExpenseManagerJavaBridge;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import org.koin.java.KoinJavaComponent;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -54,7 +51,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         clearData.setOnPreferenceClickListener((preference) -> {
             (new MaterialAlertDialogBuilder(getContext())).setTitle("警告").setMessage("确定要清除所有支出记录吗?").setNegativeButton("取消", (dialog, which) -> {
             }).setPositiveButton("确定", (dialog, which) -> {
-                ((ExpenseManager) KoinJavaComponent.get(ExpenseManager.class)).removeAllExpense();
+                ExpenseManagerJavaBridge.INSTANCE.removeAllExpense();
                 showSnackbar(getView(), "已清除");
             }).show();
             return true;
